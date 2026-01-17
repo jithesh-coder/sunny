@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GoalRoad – Welcome</title>
+  <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+  <div class="welcome-background"></div>
+
+  <main class="welcome-container">
+    <section class="welcome-inner">
+      <h1 class="welcome-title">
+        Welcome To <span class="brand-gradient">Roadmap-Hub</span>
+      </h1>
+
+      <p class="welcome-subtitle">
+        By <span class="author-gradient">ASTRO✧NEXA</span>
+      </p>
+
+      <div class="indicator-row">
+        <span class="indicator-dot"></span>
+        <span class="indicator-dot"></span>
+        <span class="indicator-dot"></span>
+      </div>
+
+      <p class="redirect-text">Redirecting...</p>
+    </section>
+  </main>
+
+  <script>
+    // Redirect to login.html after 10 seconds.
+    // replace() removes welcome.html from history so it doesn't come back.
+    setTimeout(() => {
+      window.location.replace("login3.html");
+    }, 10000);
+  </script>
+</body>
+</html>

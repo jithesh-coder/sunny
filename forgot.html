@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reset Password | RoadMap-HUB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+  <!-- Page Transition -->
+  <div class="page-transition" id="pageTransition">
+    <div class="transition-loader">
+      <div class="loader-ring"></div>
+      <span class="loader-text">Please wait...</span>
+    </div>
+  </div>
+
+  <!-- Background -->
+  <div class="signup-background"></div>
+  <div class="particles" id="particles"></div>
+
+  <!-- Container -->
+  <div class="signup-container">
+    <div class="signup-card" style="max-width: 420px;">
+      <!-- Logo -->
+      <div class="logo-section">
+        <div class="logo-icon">
+          <i class="fas fa-key"></i>
+        </div>
+        <h1 class="logo-title">
+          <span class="brand-gradient">Reset</span><span class="brand-secondary"> Password</span>
+        </h1>
+        <p class="logo-tagline">RoadMap-HUB Account Recovery</p>
+      </div>
+
+      <!-- Description -->
+      <div class="welcome-section">
+        <h2 class="welcome-title">Forgot your password?</h2>
+        <p class="welcome-desc">Enter your email address and we'll send you a link to reset your password.</p>
+      </div>
+
+      <!-- Reset Form -->
+      <form class="signup-form" id="resetForm" novalidate>
+        <!-- Email -->
+        <div class="input-group">
+          <div class="input-wrapper">
+            <div class="input-icon-wrapper">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              class="input-field" 
+              placeholder=" "
+              required
+              autocomplete="email"
+            >
+            <label for="email" class="input-label">Email Address</label>
+            <div class="input-border"></div>
+          </div>
+          <span class="error-message" id="emailError">
+            <i class="fas fa-exclamation-circle"></i>
+            <span class="error-text"></span>
+          </span>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="signup-btn" id="resetBtn">
+          <span class="btn-content">
+            <span class="btn-text">Send Reset Link</span>
+            <i class="fas fa-paper-plane btn-arrow"></i>
+          </span>
+          <span class="btn-loader">
+            <i class="fas fa-circle-notch fa-spin"></i>
+          </span>
+          <span class="btn-success">
+            <i class="fas fa-check"></i>
+            <span>Email Sent!</span>
+          </span>
+        </button>
+
+        <!-- General Error -->
+        <div class="general-error" id="generalError">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span id="generalErrorText"></span>
+        </div>
+      </form>
+
+      <!-- Success Message -->
+      <div class="success-message" id="successMessage" style="display: none;">
+        <div style="text-align: center; padding: 1.5rem 0;">
+          <div style="font-size: 3rem; color: #22c55e; margin-bottom: 1rem;">
+            <i class="fas fa-envelope-circle-check"></i>
+          </div>
+          <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Check your inbox!</h3>
+          <p style="color: #9ca3af; font-size: 0.9rem; margin-bottom: 1rem;">
+            We've sent a password reset link to <strong id="sentEmail" style="color: #4cc9f0;"></strong>
+          </p>
+          <p style="color: #6b7280; font-size: 0.8rem;">
+            Didn't receive the email? Check your spam folder or 
+            <button type="button" id="resendBtn" style="background: none; border: none; color: #a855f7; cursor: pointer; text-decoration: underline; font-size: 0.8rem;">
+              resend
+            </button>
+          </p>
+        </div>
+      </div>
+
+      <!-- Back to Login -->
+      <div class="login-section">
+        <p class="login-text">
+          Remember your password? 
+          <a href="login3.html" class="login-link" id="loginLink">
+            <span>Back to Login</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </p>
+      </div>
+
+      <!-- Security Badge -->
+      <div class="security-badge">
+        <div class="badge-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <div class="badge-text">
+          <span class="badge-title">Secure Recovery</span>
+          <span class="badge-desc">Your account is protected</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <div class="toast-icon"><i class="fas fa-check-circle"></i></div>
+    <div class="toast-content">
+      <span class="toast-title">Success!</span>
+      <span class="toast-message"></span>
+    </div>
+    <div class="toast-progress"></div>
+    <button class="toast-close" id="toastClose"><i class="fas fa-times"></i></button>
+  </div>
+
+  <script type="module" src="forgot.js"></script>
+</body>
+</html>

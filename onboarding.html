@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose Your Path | RoadMap-HUB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="onboarding.css">
+</head>
+<body>
+  <!-- Page Loader -->
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-content">
+      <div class="loader-logo">
+        <i class="fas fa-route"></i>
+      </div>
+      <p class="loader-text">Preparing your journey...</p>
+    </div>
+  </div>
+
+  <!-- Background -->
+  <div class="onboarding-background"></div>
+  <div class="particles" id="particles"></div>
+
+  <!-- Main Container -->
+  <div class="onboarding-container">
+    
+    <!-- Progress Steps -->
+    <div class="progress-steps">
+      <div class="step active" data-step="1">
+        <div class="step-number">1</div>
+        <span class="step-label">Choose Goal</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" data-step="2">
+        <div class="step-number">2</div>
+        <span class="step-label">Select Path</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" data-step="3">
+        <div class="step-number">3</div>
+        <span class="step-label">Set Schedule</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" data-step="4">
+        <div class="step-number">4</div>
+        <span class="step-label">Start Learning</span>
+      </div>
+    </div>
+
+    <!-- Step 1: Choose Goal -->
+    <section class="onboarding-step active" id="step1">
+      <div class="step-header">
+        <h1>What's your goal? 🎯</h1>
+        <p>Choose what you want to achieve</p>
+      </div>
+      
+      <div class="goals-grid">
+        <div class="goal-card" data-goal="job">
+          <div class="goal-icon">
+            <i class="fas fa-briefcase"></i>
+          </div>
+          <h3>Get a Job</h3>
+          <p>Prepare for tech job interviews</p>
+        </div>
+        
+        <div class="goal-card" data-goal="freelance">
+          <div class="goal-icon">
+            <i class="fas fa-laptop-code"></i>
+          </div>
+          <h3>Freelancing</h3>
+          <p>Build skills for freelance work</p>
+        </div>
+        
+        <div class="goal-card" data-goal="startup">
+          <div class="goal-icon">
+            <i class="fas fa-rocket"></i>
+          </div>
+          <h3>Build Startup</h3>
+          <p>Create your own products</p>
+        </div>
+        
+        <div class="goal-card" data-goal="learn">
+          <div class="goal-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <h3>Just Learning</h3>
+          <p>Expand my knowledge</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 2: Select Roadmap -->
+    <section class="onboarding-step" id="step2">
+      <div class="step-header">
+        <h1>Choose your roadmap 🗺️</h1>
+        <p>Select the learning path that fits your goals</p>
+      </div>
+      
+      <div class="roadmaps-grid" id="roadmapsGrid">
+        <!-- Roadmaps will be loaded dynamically -->
+      </div>
+      
+      <div class="roadmap-preview" id="roadmapPreview">
+        <!-- Preview panel -->
+      </div>
+    </section>
+
+    <!-- Step 3: Set Schedule -->
+    <section class="onboarding-step" id="step3">
+      <div class="step-header">
+        <h1>Set your schedule ⏰</h1>
+        <p>How much time can you dedicate?</p>
+      </div>
+      
+      <div class="schedule-options">
+        <div class="schedule-card" data-hours="1">
+          <div class="schedule-icon">🐢</div>
+          <h3>Casual</h3>
+          <p>1 hour/day</p>
+          <span class="completion-time">Complete in ~8 months</span>
+        </div>
+        
+        <div class="schedule-card selected" data-hours="2">
+          <div class="schedule-icon">🚶</div>
+          <h3>Steady</h3>
+          <p>2 hours/day</p>
+          <span class="completion-time">Complete in ~4 months</span>
+        </div>
+        
+        <div class="schedule-card" data-hours="4">
+          <div class="schedule-icon">🏃</div>
+          <h3>Intensive</h3>
+          <p>4 hours/day</p>
+          <span class="completion-time">Complete in ~2 months</span>
+        </div>
+        
+        <div class="schedule-card" data-hours="8">
+          <div class="schedule-icon">🚀</div>
+          <h3>Full-Time</h3>
+          <p>8 hours/day</p>
+          <span class="completion-time">Complete in ~1 month</span>
+        </div>
+      </div>
+      
+      <div class="weekly-goals">
+        <h3>Your weekly goals will be:</h3>
+        <ul id="weeklyGoalsList">
+          <li><i class="fas fa-check"></i> Complete 2-3 lessons</li>
+          <li><i class="fas fa-check"></i> Finish 1 practice project</li>
+          <li><i class="fas fa-check"></i> Take 1 module quiz</li>
+          <li><i class="fas fa-check"></i> Review previous concepts</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Step 4: Ready to Start -->
+    <section class="onboarding-step" id="step4">
+      <div class="step-header">
+        <h1>You're all set! 🎉</h1>
+        <p>Here's your personalized learning plan</p>
+      </div>
+      
+      <div class="plan-summary">
+        <div class="summary-card">
+          <div class="summary-icon">
+            <i class="fas fa-route"></i>
+          </div>
+          <div class="summary-content">
+            <h3 id="summaryRoadmap">Frontend Web Development</h3>
+            <p>Your chosen roadmap</p>
+          </div>
+        </div>
+        
+        <div class="summary-card">
+          <div class="summary-icon">
+            <i class="fas fa-calendar-alt"></i>
+          </div>
+          <div class="summary-content">
+            <h3 id="summaryDuration">~4 months</h3>
+            <p>Estimated completion time</p>
+          </div>
+        </div>
+        
+        <div class="summary-card">
+          <div class="summary-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="summary-content">
+            <h3 id="summaryHours">2 hours/day</h3>
+            <p>Your daily commitment</p>
+          </div>
+        </div>
+        
+        <div class="summary-card">
+          <div class="summary-icon">
+            <i class="fas fa-bullseye"></i>
+          </div>
+          <div class="summary-content">
+            <h3 id="summaryGoal">Get a Job</h3>
+            <p>Your goal</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="first-task">
+        <h3>Your first task:</h3>
+        <div class="task-card">
+          <div class="task-icon">
+            <i class="fas fa-play-circle"></i>
+          </div>
+          <div class="task-content">
+            <h4 id="firstTaskTitle">Introduction to HTML</h4>
+            <p id="firstTaskDesc">Start with the basics of web structure</p>
+          </div>
+          <span class="task-duration" id="firstTaskDuration">45 min</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Buttons -->
+    <div class="onboarding-nav">
+      <button class="nav-btn back-btn" id="backBtn" style="display: none;">
+        <i class="fas fa-arrow-left"></i>
+        <span>Back</span>
+      </button>
+      
+      <button class="nav-btn next-btn" id="nextBtn">
+        <span>Continue</span>
+        <i class="fas fa-arrow-right"></i>
+      </button>
+      
+      <button class="nav-btn start-btn" id="startBtn" style="display: none;">
+        <span>Start Learning</span>
+        <i class="fas fa-rocket"></i>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <div class="toast-icon"><i class="fas fa-check-circle"></i></div>
+    <div class="toast-content">
+      <span class="toast-title">Success!</span>
+      <span class="toast-message"></span>
+    </div>
+  </div>
+
+  <script type="module" src="onboarding.js"></script>
+</body>
+</html>

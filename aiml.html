@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete AI/ML Learning Roadmap with curated YouTube tutorials, progress tracking, quizzes, and goals">
+    <meta name="keywords" content="AI, ML, Machine Learning, Deep Learning, Python, TensorFlow, PyTorch, Tutorial">
+    <meta name="author" content="AI-ML Roadmap Hub">
+    
+    <title>AI-ML Roadmap Hub | Learn AI & Machine Learning</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="aiml.css">
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="page-loader-content">
+            <div class="page-loader-logo">🤖</div>
+            <h2 class="page-loader-text">Loading AI-ML Roadmap Hub...</h2>
+            <div class="page-loader-bar">
+                <div class="page-loader-bar-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skip Link for Accessibility -->
+    <a href="#mainContent" class="skip-link">Skip to main content</a>
+
+    <!-- App Container -->
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo"></div>
+                <div class="sidebar-title">
+                    <h1>AI-ML Hub</h1>
+                    <span>Learning Roadmap</span>
+                </div>
+            </div>
+            
+            <div class="sidebar-toggle" onclick="toggleSidebar()">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main Menu</div>
+                    <div class="nav-item active" data-section="dashboard">
+                        <i class="fas fa-th-large"></i>
+                        <span>Dashboard</span>
+                    </div>
+                    <div class="nav-item" data-section="roadmap">
+                        <i class="fas fa-route"></i>
+                        <span>Roadmap</span>
+                        <div class="badge">New</div>
+                    </div>
+                    <div class="nav-item" data-section="quiz">
+                        <i class="fas fa-brain"></i>
+                        <span>Quiz</span>
+                    </div>
+                    <div class="nav-item" data-section="goals">
+                        <i class="fas fa-bullseye"></i>
+                        <span>Goals</span>
+                    </div>
+                    <div class="nav-item" data-section="progress">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Progress</span>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Learning Paths</div>
+                    <div class="nav-item" data-section="roadmap" data-level="foundations">
+                        <i class="fas fa-code"></i>
+                        <span>Foundations</span>
+                    </div>
+                    <div class="nav-item" data-section="roadmap" data-level="data-handling">
+                        <i class="fas fa-database"></i>
+                        <span>Data Handling</span>
+                    </div>
+                    <div class="nav-item" data-section="roadmap" data-level="machine-learning">
+                        <i class="fas fa-robot"></i>
+                        <span>Machine Learning</span>
+                    </div>
+                    <div class="nav-item" data-section="roadmap" data-level="deep-learning">
+                        <i class="fas fa-network-wired"></i>
+                        <span>Deep Learning</span>
+                    </div>
+                    <div class="nav-item" data-section="roadmap" data-level="ai-applications">
+                        <i class="fas fa-magic"></i>
+                        <span>AI Applications</span>
+                    </div>
+                    <div class="nav-item" data-section="roadmap" data-level="projects">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>Projects</span>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Resources</div>
+                    <div class="nav-item" onclick="window.open('https://github.com', '_blank')">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub Repos</span>
+                    </div>
+                    <div class="nav-item" onclick="window.open('https://kaggle.com', '_blank')">
+                        <i class="fab fa-kaggle"></i>
+                        <span>Kaggle Datasets</span>
+                    </div>
+                    <div class="nav-item" onclick="window.open('https://paperswithcode.com', '_blank')">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Research Papers</span>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="sidebar-progress">
+                <div class="progress-card">
+                    <div class="progress-card-title">
+                        <i class="fas fa-trophy"></i>
+                        <span>Overall Progress</span>
+                    </div>
+                    <div class="progress-percentage">0%</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="btn btn-ghost mobile-menu-btn" onclick="toggleMobileSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="header-search">
+                        <input type="text" placeholder="Search topics, videos, concepts...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <button class="header-btn" data-tooltip="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+                    
+                    <button class="header-btn" data-tooltip="Bookmarks">
+                        <i class="fas fa-bookmark"></i>
+                    </button>
+
+                    <div class="theme-toggle" onclick="toggleTheme()">
+                        <div class="theme-toggle-circle"></div>
+                    </div>
+
+                    <div class="user-avatar" data-tooltip="Profile">
+                        L
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="main-content" id="mainContent">
+                <!-- Content will be rendered by JavaScript -->
+            </main>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <p>&copy; 2024 AI-ML Roadmap Hub. Built for learners, by learners.</p>
+                    <div class="footer-links">
+                        <a href="#">About</a>
+                        <a href="#">Privacy</a>
+                        <a href="#">Terms</a>
+                        <a href="#">Contact</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <!-- Video Modal -->
+<div class="video-modal" id="videoModal">
+    <div class="video-modal-content">
+        <div class="video-modal-header">
+            <h3 class="video-modal-title"></h3>
+            <div class="video-modal-header-actions">
+                <button class="btn btn-ghost btn-sm" onclick="toggleVideoNotes()" data-tooltip="Notes">
+                    <i class="fas fa-sticky-note"></i>
+                </button>
+                <button class="btn btn-ghost btn-sm" onclick="toggleVideoBookmark()" data-tooltip="Bookmark">
+                    <i class="fas fa-bookmark"></i>
+                </button>
+                <div class="video-modal-close" onclick="closeVideoModal()">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="video-modal-body">
+            <!-- Video Container -->
+            <div class="video-main-area">
+                <div class="video-container">
+                    <iframe 
+                        id="videoIframe"
+                        src=""
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                
+                <div class="video-modal-footer">
+                    <div class="video-progress-controls">
+                        <button class="btn btn-success" id="markCompleteBtn" onclick="markVideoComplete()">
+                            <i class="fas fa-check"></i>
+                            <span>Mark as Complete</span>
+                        </button>
+                        <button class="btn btn-primary" id="addNotesBtn" onclick="toggleVideoNotes()">
+                            <i class="fas fa-edit"></i>
+                            <span>Add Notes</span>
+                        </button>
+                    </div>
+                    <div class="video-info">
+                        <span class="badge badge-primary" id="videoDuration"></span>
+                        <span class="badge badge-info" id="videoChannel"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Notes Panel (Slide-in) -->
+            <div class="video-notes-panel" id="videoNotesPanel">
+                <div class="notes-panel-header">
+                    <h4><i class="fas fa-sticky-note"></i> Notes</h4>
+                    <div class="notes-panel-actions">
+                        <button class="btn btn-ghost btn-sm" onclick="saveNotesToFile()" data-tooltip="Download as DOC">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="btn btn-ghost btn-sm" onclick="clearCurrentNotes()" data-tooltip="Clear">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button class="btn btn-ghost btn-sm" onclick="toggleVideoNotes()" data-tooltip="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="notes-panel-body">
+                    <!-- Notes Toolbar -->
+                    <div class="notes-toolbar">
+                        <div class="notes-toolbar-group">
+                            <button class="notes-tool-btn" onclick="formatNote('bold')" data-tooltip="Bold (Ctrl+B)">
+                                <i class="fas fa-bold"></i>
+                            </button>
+                            <button class="notes-tool-btn" onclick="formatNote('italic')" data-tooltip="Italic (Ctrl+I)">
+                                <i class="fas fa-italic"></i>
+                            </button>
+                            <button class="notes-tool-btn" onclick="formatNote('underline')" data-tooltip="Underline (Ctrl+U)">
+                                <i class="fas fa-underline"></i>
+                            </button>
+                            <button class="notes-tool-btn" onclick="formatNote('strikethrough')" data-tooltip="Strikethrough">
+                                <i class="fas fa-strikethrough"></i>
+                            </button>
+                        </div>
+                        <div class="notes-toolbar-divider"></div>
+                        <div class="notes-toolbar-group">
+                            <button class="notes-tool-btn" onclick="formatNote('heading')" data-tooltip="Heading">
+                                <i class="fas fa-heading"></i>
+                            </button>
+                            <button class="notes-tool-btn" onclick="formatNote('bullet')" data-tooltip="Bullet List">
+                                <i class="fas fa-list-ul"></i>
+                            </button>
+                            <button class="notes-tool-btn" onclick="formatNote('number')" data-tooltip="Numbered List">
+                                <i class="fas fa-list-ol"></i>
+                            </button>
+                            <button class="notes-tool-btn" onclick="formatNote('checkbox')" data-tooltip="Checkbox">
+                                <i class="fas fa-check-square"></i>
+                            </button>
+                        </div>
+                        <div class="notes-toolbar-divider"></div>
+                        <div class="notes-toolbar-group">
+                            <button class="notes-tool-btn" onclick="formatNote('highlight')" data-tooltip="Highlight">
+                                <i class="fas fa-highlighter"></i>
+                            </button>
+                            <button class="notes-tool-btn" onclick="formatNote('code')" data-tooltip="Code Block">
+                                <i class="fas fa-code"></i>
+                            </button>
+                            <button class="notes-tool-btn" onclick="formatNote('link')" data-tooltip="Insert Link">
+                                <i class="fas fa-link"></i>
+                            </button>
+                            <button class="notes-tool-btn" onclick="insertTimestamp()" data-tooltip="Insert Timestamp">
+                                <i class="fas fa-clock"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Notes Editor -->
+                    <div class="notes-editor-container">
+                        <div 
+                            class="notes-editor" 
+                            id="notesEditor" 
+                            contenteditable="true" 
+                            placeholder="Start typing your notes here..."
+                            oninput="autoSaveNotes()"
+                        ></div>
+                    </div>
+                    
+                    <!-- Notes Status Bar -->
+                    <div class="notes-status-bar">
+                        <div class="notes-status-left">
+                            <span class="notes-word-count">
+                                <i class="fas fa-font"></i>
+                                <span id="notesWordCount">0</span> words
+                            </span>
+                            <span class="notes-char-count">
+                                <i class="fas fa-text-width"></i>
+                                <span id="notesCharCount">0</span> chars
+                            </span>
+                        </div>
+                        <div class="notes-status-right">
+                            <span class="notes-save-status" id="notesSaveStatus">
+                                <i class="fas fa-check-circle"></i> Saved
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="notes-panel-footer">
+                    <div class="notes-export-options">
+                        <button class="btn btn-secondary btn-sm" onclick="saveNotesToFile()">
+                            <i class="fas fa-file-word"></i> Download DOC
+                        </button>
+                        <button class="btn btn-secondary btn-sm" onclick="saveNotesAsPDF()">
+                            <i class="fas fa-file-pdf"></i> Download PDF
+                        </button>
+                        <button class="btn btn-secondary btn-sm" onclick="saveNotesAsTXT()">
+                            <i class="fas fa-file-alt"></i> Download TXT
+                        </button>
+                        <button class="btn btn-primary btn-sm" onclick="saveAndCloseNotes()">
+                            <i class="fas fa-save"></i> Save & Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- All Notes Modal (Access saved notes) -->
+<div class="all-notes-modal" id="allNotesModal">
+    <div class="all-notes-modal-content">
+        <div class="all-notes-header">
+            <h3><i class="fas fa-sticky-note"></i> My Notes</h3>
+            <div class="all-notes-header-actions">
+                <div class="notes-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search notes..." id="notesSearchInput" oninput="searchNotes(this.value)">
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="exportAllNotes()">
+                    <i class="fas fa-download"></i> Export All
+                </button>
+                <button class="all-notes-close" onclick="closeAllNotesModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="all-notes-body" id="allNotesBody">
+            <!-- Notes will be rendered here -->
+        </div>
+        
+        <div class="all-notes-footer">
+            <p class="notes-count"><span id="totalNotesCount">0</span> notes saved</p>
+            <button class="btn btn-danger btn-sm" onclick="confirmDeleteAllNotes()">
+                <i class="fas fa-trash"></i> Delete All Notes
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Video Leave Confirmation Modal -->
+<div class="video-leave-modal" id="videoLeaveModal">
+    <div class="video-leave-modal-content">
+        <div class="video-leave-icon">
+            <i class="fas fa-pause-circle"></i>
+        </div>
+        <h3>Leave Video?</h3>
+        <p>You haven't finished this video yet. What would you like to do?</p>
+        <div class="video-leave-progress">
+            <div class="video-leave-progress-bar">
+                <div class="video-leave-progress-fill" id="videoLeaveProgressFill" style="width: 0%"></div>
+            </div>
+            <span id="videoLeaveProgressText">0% watched</span>
+        </div>
+        <div class="video-leave-actions">
+            <button class="btn btn-secondary" onclick="continueWatching()">
+                <i class="fas fa-play"></i> Continue Watching
+            </button>
+            <button class="btn btn-primary" onclick="saveAndLeave()">
+                <i class="fas fa-save"></i> Save & Leave
+            </button>
+            <button class="btn btn-ghost" onclick="leaveWithoutSaving()">
+                <i class="fas fa-times"></i> Leave
+            </button>
+        </div>
+        <div class="video-leave-options">
+            <label class="checkbox-label">
+                <input type="checkbox" id="dontAskAgain" onchange="toggleDontAskAgain(this.checked)">
+                <span class="checkmark"></span>
+                Don't ask me again
+            </label>
+        </div>
+    </div>
+</div>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Confetti Container -->
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <!-- Main JavaScript -->
+    <script src="aiml.js"></script>
+</body>
+</html>
+<!-- User Profile Dropdown -->
+<div class="profile-dropdown" id="profileDropdown">
+    <div class="profile-dropdown-header">
+        <div class="profile-avatar-large">
+            <img src="" alt="User Avatar" id="profileAvatarImg">
+            <div class="profile-avatar-fallback">L</div>
+            <div class="profile-status online"></div>
+        </div>
+        <div class="profile-info">
+            <h3 id="profileName">Learner</h3>
+            <p id="profileEmail">learner@aimlhub.com</p>
+            <span class="profile-badge">
+                <i class="fas fa-crown"></i> Pro Learner
+            </span>
+        </div>
+    </div>
+    
+    <div class="profile-dropdown-stats">
+        <div class="profile-stat">
+            <span class="profile-stat-value" id="profileTopicsCount">0</span>
+            <span class="profile-stat-label">Topics</span>
+        </div>
+        <div class="profile-stat">
+            <span class="profile-stat-value" id="profileStreakCount">0</span>
+            <span class="profile-stat-label">Streak</span>
+        </div>
+        <div class="profile-stat">
+            <span class="profile-stat-value" id="profileQuizCount">0</span>
+            <span class="profile-stat-label">Quizzes</span>
+        </div>
+    </div>
+    
+    <div class="profile-dropdown-menu">
+        <div class="profile-menu-item" onclick="openSettings('profile')">
+            <i class="fas fa-user-circle"></i>
+            <span>My Profile</span>
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        <div class="profile-menu-item" onclick="openSettings('appearance')">
+            <i class="fas fa-palette"></i>
+            <span>Appearance</span>
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        <div class="profile-menu-item" onclick="openSettings('notifications')">
+            <i class="fas fa-bell"></i>
+            <span>Notifications</span>
+            <span class="menu-badge">3</span>
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        <div class="profile-menu-item" onclick="openSettings('data')">
+            <i class="fas fa-database"></i>
+            <span>Data & Storage</span>
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        <div class="profile-menu-item" onclick="openSettings('preferences')">
+            <i class="fas fa-sliders-h"></i>
+            <span>Preferences</span>
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        <div class="profile-menu-item" onclick="openSettings('keyboard')">
+            <i class="fas fa-keyboard"></i>
+            <span>Keyboard Shortcuts</span>
+            <i class="fas fa-chevron-right"></i>
+        </div>
+    </div>
+    
+    <div class="profile-dropdown-footer">
+        <button class="btn btn-outline btn-sm" onclick="exportUserData()">
+            <i class="fas fa-download"></i>
+            Export Data
+        </button>
+        <button class="btn btn-danger btn-sm" onclick="confirmLogout()">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+        </button>
+    </div>
+</div>
+
+<!-- Settings Modal -->
+<div class="settings-modal" id="settingsModal">
+    <div class="settings-modal-content">
+        <div class="settings-sidebar">
+            <div class="settings-sidebar-header">
+                <h2><i class="fas fa-cog"></i> Settings</h2>
+            </div>
+            <div class="settings-nav">
+                <div class="settings-nav-item active" data-tab="profile" onclick="switchSettingsTab('profile')">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Profile</span>
+                </div>
+                <div class="settings-nav-item" data-tab="appearance" onclick="switchSettingsTab('appearance')">
+                    <i class="fas fa-palette"></i>
+                    <span>Appearance</span>
+                </div>
+                <div class="settings-nav-item" data-tab="notifications" onclick="switchSettingsTab('notifications')">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                </div>
+                <div class="settings-nav-item" data-tab="data" onclick="switchSettingsTab('data')">
+                    <i class="fas fa-database"></i>
+                    <span>Data & Storage</span>
+                </div>
+                <div class="settings-nav-item" data-tab="preferences" onclick="switchSettingsTab('preferences')">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Preferences</span>
+                </div>
+                <div class="settings-nav-item" data-tab="keyboard" onclick="switchSettingsTab('keyboard')">
+                    <i class="fas fa-keyboard"></i>
+                    <span>Keyboard Shortcuts</span>
+                </div>
+                <div class="settings-nav-item" data-tab="about" onclick="switchSettingsTab('about')">
+                    <i class="fas fa-info-circle"></i>
+                    <span>About</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="settings-main">
+            <div class="settings-header">
+                <h3 id="settingsTitle">Profile Settings</h3>
+                <button class="settings-close" onclick="closeSettings()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="settings-body">
+                <!-- Profile Tab -->
+                <div class="settings-tab active" id="settingsTabProfile">
+                    <div class="settings-section">
+                        <h4>Profile Information</h4>
+                        <div class="profile-avatar-upload">
+                            <div class="avatar-preview" id="avatarPreview">
+                                <img src="" alt="Avatar" id="avatarPreviewImg">
+                                <div class="avatar-fallback">L</div>
+                            </div>
+                            <div class="avatar-upload-controls">
+                                <input type="file" id="avatarInput" accept="image/*" hidden>
+                                <button class="btn btn-secondary btn-sm" onclick="document.getElementById('avatarInput').click()">
+                                    <i class="fas fa-camera"></i> Upload Photo
+                                </button>
+                                <button class="btn btn-ghost btn-sm" onclick="removeAvatar()">
+                                    <i class="fas fa-trash"></i> Remove
+                                </button>
+                                <p class="upload-hint">JPG, PNG or GIF. Max 2MB</p>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="userName">Full Name</label>
+                                    <input type="text" id="userName" class="form-input" placeholder="Enter your name" value="Learner">
+                                </div>
+                                <div class="form-group">
+                                    <label for="userUsername">Username</label>
+                                    <input type="text" id="userUsername" class="form-input" placeholder="Enter username" value="learner123">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="userEmail">Email Address</label>
+                                    <input type="email" id="userEmail" class="form-input" placeholder="Enter email" value="learner@aimlhub.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="userPhone">Phone Number</label>
+                                    <input type="tel" id="userPhone" class="form-input" placeholder="+1 (555) 000-0000">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="userBio">Bio</label>
+                                <textarea id="userBio" class="form-input form-textarea" placeholder="Tell us about yourself..." rows="3">Passionate about AI/ML and continuous learning!</textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="userLocation">Location</label>
+                                    <input type="text" id="userLocation" class="form-input" placeholder="City, Country">
+                                </div>
+                                <div class="form-group">
+                                    <label for="userTimezone">Timezone</label>
+                                    <select id="userTimezone" class="form-input form-select">
+                                        <option value="UTC-8">Pacific Time (PT)</option>
+                                        <option value="UTC-5">Eastern Time (ET)</option>
+                                        <option value="UTC+0">GMT/UTC</option>
+                                        <option value="UTC+1">Central European Time</option>
+                                        <option value="UTC+5:30" selected>India Standard Time</option>
+                                        <option value="UTC+8">China Standard Time</option>
+                                        <option value="UTC+9">Japan Standard Time</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4>Social Links</h4>
+                        <div class="settings-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label><i class="fab fa-github"></i> GitHub</label>
+                                    <input type="url" class="form-input" placeholder="https://github.com/username" id="socialGithub">
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fab fa-linkedin"></i> LinkedIn</label>
+                                    <input type="url" class="form-input" placeholder="https://linkedin.com/in/username" id="socialLinkedin">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label><i class="fab fa-twitter"></i> Twitter</label>
+                                    <input type="url" class="form-input" placeholder="https://twitter.com/username" id="socialTwitter">
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fas fa-globe"></i> Website</label>
+                                    <input type="url" class="form-input" placeholder="https://yourwebsite.com" id="socialWebsite">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-actions">
+                        <button class="btn btn-secondary" onclick="resetProfileSettings()">Reset Changes</button>
+                        <button class="btn btn-primary" onclick="saveProfileSettings()">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Appearance Tab -->
+                <div class="settings-tab" id="settingsTabAppearance">
+                    <div class="settings-section">
+                        <h4>Theme</h4>
+                        <div class="theme-selector">
+                            <div class="theme-option" data-theme="light" onclick="selectTheme('light')">
+                                <div class="theme-preview theme-preview-light">
+                                    <div class="preview-header"></div>
+                                    <div class="preview-sidebar"></div>
+                                    <div class="preview-content">
+                                        <div class="preview-card"></div>
+                                        <div class="preview-card"></div>
+                                    </div>
+                                </div>
+                                <span>Light</span>
+                                <i class="fas fa-check-circle theme-check"></i>
+                            </div>
+                            <div class="theme-option" data-theme="dark" onclick="selectTheme('dark')">
+                                <div class="theme-preview theme-preview-dark">
+                                    <div class="preview-header"></div>
+                                    <div class="preview-sidebar"></div>
+                                    <div class="preview-content">
+                                        <div class="preview-card"></div>
+                                        <div class="preview-card"></div>
+                                    </div>
+                                </div>
+                                <span>Dark</span>
+                                <i class="fas fa-check-circle theme-check"></i>
+                            </div>
+                            <div class="theme-option" data-theme="system" onclick="selectTheme('system')">
+                                <div class="theme-preview theme-preview-system">
+                                    <div class="preview-header"></div>
+                                    <div class="preview-sidebar"></div>
+                                    <div class="preview-content">
+                                        <div class="preview-card"></div>
+                                        <div class="preview-card"></div>
+                                    </div>
+                                </div>
+                                <span>System</span>
+                                <i class="fas fa-check-circle theme-check"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4>Accent Color</h4>
+                        <div class="color-selector">
+                            <div class="color-option active" data-color="purple" onclick="selectAccentColor('purple')" style="--color: linear-gradient(135deg, #667eea, #764ba2)"></div>
+                            <div class="color-option" data-color="blue" onclick="selectAccentColor('blue')" style="--color: linear-gradient(135deg, #4facfe, #00f2fe)"></div>
+                            <div class="color-option" data-color="green" onclick="selectAccentColor('green')" style="--color: linear-gradient(135deg, #11998e, #38ef7d)"></div>
+                            <div class="color-option" data-color="orange" onclick="selectAccentColor('orange')" style="--color: linear-gradient(135deg, #f093fb, #f5576c)"></div>
+                            <div class="color-option" data-color="red" onclick="selectAccentColor('red')" style="--color: linear-gradient(135deg, #eb3349, #f45c43)"></div>
+                            <div class="color-option" data-color="teal" onclick="selectAccentColor('teal')" style="--color: linear-gradient(135deg, #20bf55, #01baef)"></div>
+                            <div class="color-option custom" onclick="openCustomColorPicker()">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4>Font Size</h4>
+                        <div class="font-size-selector">
+                            <span class="font-size-label">A</span>
+                            <input type="range" min="12" max="20" value="16" class="font-size-slider" id="fontSizeSlider" oninput="changeFontSize(this.value)">
+                            <span class="font-size-label large">A</span>
+                            <span class="font-size-value" id="fontSizeValue">16px</span>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4>Display Options</h4>
+                        <div class="settings-options">
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <span class="option-title">Compact Mode</span>
+                                    <span class="option-description">Reduce spacing and padding for more content</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="compactMode" onchange="toggleCompactMode(this.checked)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <span class="option-title">Animations</span>
+                                    <span class="option-description">Enable smooth animations and transitions</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="enableAnimations" checked onchange="toggleAnimations(this.checked)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <span class="option-title">Blur Effects</span>
+                                    <span class="option-description">Enable glassmorphism blur effects</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="enableBlur" checked onchange="toggleBlurEffects(this.checked)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <span class="option-title">Sidebar Always Visible</span>
+                                    <span class="option-description">Keep sidebar expanded on larger screens</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="sidebarVisible" checked onchange="toggleSidebarVisibility(this.checked)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Notifications Tab -->
+                <div class="settings-tab" id="settingsTabNotifications">
+                    <div class="settings-section">
+                        <h4>Notification Preferences</h4>
+                        <div class="settings-options">
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <span class="option-title">Push Notifications</span>
+                                    <span class="option-description">Receive browser notifications</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="pushNotifications" onchange="togglePushNotifications(this.checked)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <span class="option-title">Sound Effects</span>
+                                    <span class="option-description">Play sounds for notifications</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="soundEffects" checked onchange="toggleSoundEffects(this.checked)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <span class="option-title">Daily Reminders</span>
+                                    <span class="option-description">Get reminded to continue learning</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="dailyReminders" checked onchange="toggleDailyReminders(this.checked)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <span class="option-title">Streak Alerts</span>
+                                    <span class="option-description">Notify when streak is about to break</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="streakAlerts" checked onchange="toggleStreakAlerts(this.checked)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <span class="option-title">Achievement Notifications</span>
+                                    <span class="option-description">Celebrate your milestones</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="achievementNotifications" checked onchange="toggleAchievementNotifications(this.checked)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4>Reminder Time</h4>
+                        <div class="reminder-time-selector">
+                            <div class="form-group">
+                                <label>Daily reminder at</label>
+                                <input type="time" id="reminderTime" class="form-input" value="09:00" onchange="setReminderTime(this.value)">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4>Recent Notifications</h4>
+                        <div class="notifications-list" id="notificationsList">
+                            <!-- Notifications will be rendered here -->
+                        </div>
+                        <button class="btn btn-ghost btn-sm" onclick="clearAllNotifications()" style="margin-top: var(--space-md);">
+                            <i class="fas fa-trash"></i> Clear All Notifications
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Data & Storage Tab -->
+                <div class="settings-tab" id="settingsTabData">
+                    <div class="settings-section">
+                        <h4>Storage Usage</h4>
+                        <div class="storage-info">
+                            <div class="storage-bar">
+                                <div class="storage-bar-fill" id="storageBarFill" style="width: 35%"></div>
+                            </div>
+                            <div class="storage-details">
+                                <span id="storageUsed">1.2 MB</span> of <span>5 MB</span> used
+                            </div>
+                        </div>
+                        
+                        <div class="storage-breakdown">
+                            <div class="storage-item">
+                                <div class="storage-item-icon" style="background: var(--primary-gradient);">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="storage-item-info">
+                                    <span>Progress Data</span>
+                                    <small id="progressDataSize">450 KB</small>
+                                </div>
+                            </div>
+                            <div class="storage-item">
+                                <div class="storage-item-icon" style="background: var(--success-gradient);">
+                                    <i class="fas fa-bullseye"></i>
+                                </div>
+                                <div class="storage-item-info">
+                                    <span>Goals & Streaks</span>
+                                    <small id="goalsDataSize">120 KB</small>
+                                </div>
+                            </div>
+                            <div class="storage-item">
+                                <div class="storage-item-icon" style="background: var(--secondary-gradient);">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <div class="storage-item-info">
+                                    <span>Quiz Scores</span>
+                                    <small id="quizDataSize">280 KB</small>
+                                </div>
+                            </div>
+                            <div class="storage-item">
+                                <div class="storage-item-icon" style="background: var(--accent-gradient);">
+                                    <i class="fas fa-cog"></i>
+                                </div>
+                                <div class="storage-item-info">
+                                    <span>Settings & Preferences</span>
+                                    <small id="settingsDataSize">50 KB</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4>Data Management</h4>
+                        <div class="data-actions">
+                            <div class="data-action-card">
+                                <div class="data-action-icon">
+                                    <i class="fas fa-download"></i>
+                                </div>
+                                <div class="data-action-info">
+                                    <h5>Export Data</h5>
+                                    <p>Download all your data as JSON</p>
+                                </div>
+                                <button class="btn btn-secondary btn-sm" onclick="exportAllData()">
+                                    Export
+                                </button>
+                            </div>
+                            <div class="data-action-card">
+                                <div class="data-action-icon">
+                                    <i class="fas fa-upload"></i>
+                                </div>
+                                <div class="data-action-info">
+                                    <h5>Import Data</h5>
+                                    <p>Restore from a backup file</p>
+                                </div>
+                                <input type="file" id="importDataInput" accept=".json" hidden onchange="importData(this.files[0])">
+                                <button class="btn btn-secondary btn-sm" onclick="document.getElementById('importDataInput').click()">
+                                    Import
+                                </button>
+                            </div>
+                            <div class="data-action-card">
+                                <div class="data-action-icon warning">
+                                    <i class="fas fa-sync-alt"></i>
+                                </div>
+                                <div class="data-action-info">
+                                    <h5>Reset Progress</h5>
+                                    <p>Clear all learning progress</p>
+                                </div>
+                                <button class="btn btn-danger btn-sm" onclick="confirmResetProgress()">
+                                    Reset
+                                </button>
+                            </div>
+                            <div class="data-action-card">
+                                <div class="data-action-icon danger">
+                                    <i class="fas fa-trash-alt"></i>
+                                </div>
+                                <div class="data-action-info">
+                                    <h5>Delete All Data</h5>
+                                    <p>Permanently delete everything</p>
+                                </div>
+                                <button class="btn btn-danger btn-sm" onclick="confirmDeleteAllData()">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4>Auto-Save</h4>
+                        <div class="settings-options">
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <span class="option-title">Auto-Save Progress</span>
+                                    <span class="option-description">Automatically save your progress</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="autoSave" checked onchange="toggleAutoSave(this.checked)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="form-group" style="margin-top: var(--space-md);">
+                                <label>Save Interval</label>
+                                <select class="form-input form-select" id="saveInterval" onchange="setSaveInterval(this.value)">
+                                    <option value="10000">Every 10 seconds</option>
+                                    <option value="30000" selected>Every 30 seconds</option>
+                                    <option value="60000">Every 1 minute</option>
+                                    <option value="300000">Every 5 minutes</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Preferences Tab -->
+                <div class="settings-tab" id="settingsTabPreferences">
+                    <div class="settings-section">
+                        <h4>Learning Preferences</h4>
+                        <div class="settings-options">
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <span class="option-title">Auto-play Videos</span>
+                                    <span class="option-description">Automatically play next video in sequence</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="autoPlayVideos" onchange="toggleAutoPlayVideos(this.checked)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <span class="option-title">Show Video Progress</span>
+                                    <span class="option-description">Display progress bar on video thumbnails</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="showVideoProgress" checked onchange="toggleVideoProgress(this.checked)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <span class="option-title">Confirm Before Marking Complete</span>
+                                    <span class="option-description">Ask for confirmation before completing topics</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="confirmComplete" onchange="toggleConfirmComplete(this.checked)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4>Quiz Preferences</h4>
+                        <div class="settings-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Default Question Count</label>
+                                    <select class="form-input form-select" id="defaultQuizCount" onchange="setDefaultQuizCount(this.value)">
+                                        <option value="5">5 Questions</option>
+                                        <option value="10" selected>10 Questions</option>
+                                        <option value="15">15 Questions</option>
+                                        <option value="20">20 Questions</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Default Difficulty</label>
+                                    <select class="form-input form-select" id="defaultDifficulty" onchange="setDefaultDifficulty(this.value)">
+                                        <option value="all" selected>All Levels</option>
+                                        <option value="easy">Easy</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="hard">Hard</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <span class="option-title">Show Explanations</span>
+                                    <span class="option-description">Display explanations after each answer</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="showExplanations" checked onchange="toggleExplanations(this.checked)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-option">
+                                <div class="option-info">
+                                    <span class="option-title">Timed Mode</span>
+                                    <span class="option-description">Add time limit to quizzes</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="timedMode" onchange="toggleTimedMode(this.checked)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4>Daily Goals</h4>
+                        <div class="settings-form">
+                            <div class="form-group">
+                                <label>Daily Learning Goal (minutes)</label>
+                                <input type="number" class="form-input" id="dailyGoalMinutes" value="30" min="5" max="480" onchange="setDailyGoal(this.value)">
+                            </div>
+                            <div class="form-group">
+                                <label>Weekly Topic Goal</label>
+                                <input type="number" class="form-input" id="weeklyTopicGoal" value="5" min="1" max="50" onchange="setWeeklyGoal(this.value)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Keyboard Shortcuts Tab -->
+                <div class="settings-tab" id="settingsTabKeyboard">
+                    <div class="settings-section">
+                        <h4>Navigation</h4>
+                        <div class="shortcuts-list">
+                            <div class="shortcut-item">
+                                <span>Go to Dashboard</span>
+                                <div class="shortcut-keys">
+                                    <kbd>G</kbd> <span>then</span> <kbd>D</kbd>
+                                </div>
+                            </div>
+                            <div class="shortcut-item">
+                                <span>Go to Roadmap</span>
+                                <div class="shortcut-keys">
+                                    <kbd>G</kbd> <span>then</span> <kbd>R</kbd>
+                                </div>
+                            </div>
+                            <div class="shortcut-item">
+                                <span>Go to Quiz</span>
+                                <div class="shortcut-keys">
+                                    <kbd>G</kbd> <span>then</span> <kbd>Q</kbd>
+                                </div>
+                            </div>
+                            <div class="shortcut-item">
+                                <span>Go to Goals</span>
+                                <div class="shortcut-keys">
+                                    <kbd>G</kbd> <span>then</span> <kbd>G</kbd>
+                                </div>
+                            </div>
+                            <div class="shortcut-item">
+                                <span>Open Settings</span>
+                                <div class="shortcut-keys">
+                                    <kbd>Ctrl</kbd> + <kbd>,</kbd>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4>Actions</h4>
+                        <div class="shortcuts-list">
+                            <div class="shortcut-item">
+                                <span>Toggle Theme</span>
+                                <div class="shortcut-keys">
+                                    <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>T</kbd>
+                                </div>
+                            </div>
+                            <div class="shortcut-item">
+                                <span>Toggle Sidebar</span>
+                                <div class="shortcut-keys">
+                                    <kbd>Ctrl</kbd> + <kbd>B</kbd>
+                                </div>
+                            </div>
+                            <div class="shortcut-item">
+                                <span>Focus Search</span>
+                                <div class="shortcut-keys">
+                                    <kbd>Ctrl</kbd> + <kbd>K</kbd>
+                                </div>
+                            </div>
+                            <div class="shortcut-item">
+                                <span>Close Modal/Popup</span>
+                                <div class="shortcut-keys">
+                                    <kbd>Esc</kbd>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4>Video Player</h4>
+                        <div class="shortcuts-list">
+                            <div class="shortcut-item">
+                                <span>Play/Pause</span>
+                                <div class="shortcut-keys">
+                                    <kbd>Space</kbd>
+                                </div>
+                            </div>
+                            <div class="shortcut-item">
+                                <span>Fullscreen</span>
+                                <div class="shortcut-keys">
+                                    <kbd>F</kbd>
+                                </div>
+                            </div>
+                            <div class="shortcut-item">
+                                <span>Mark Complete</span>
+                                <div class="shortcut-keys">
+                                    <kbd>M</kbd>
+                                </div>
+                            </div>
+                            <div class="shortcut-item">
+                                <span>Close Video</span>
+                                <div class="shortcut-keys">
+                                    <kbd>Esc</kbd>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- About Tab -->
+                <div class="settings-tab" id="settingsTabAbout">
+                    <div class="about-header">
+                        <div class="about-logo">🤖</div>
+                        <h2>AI-ML Roadmap Hub</h2>
+                        <p class="about-version">Version 2.0.0</p>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4>About This App</h4>
+                        <p class="about-description">
+                            AI-ML Roadmap Hub is a comprehensive learning platform designed to help you master 
+                            Artificial Intelligence and Machine Learning from scratch. With curated YouTube tutorials, 
+                            progress tracking, interactive quizzes, and goal setting, we make your learning journey 
+                            structured and enjoyable.
+                        </p>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4>Features</h4>
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <i class="fas fa-route"></i>
+                                <span>Structured Roadmap</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fab fa-youtube"></i>
+                                <span>Curated Videos</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Progress Tracking</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-brain"></i>
+                                <span>Interactive Quizzes</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-bullseye"></i>
+                                <span>Goal Setting</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-fire"></i>
+                                <span>Streak Tracking</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4>Links</h4>
+                        <div class="about-links">
+                            <a href="#" class="about-link" onclick="openExternalLink('https://github.com')">
+                                <i class="fab fa-github"></i> GitHub Repository
+                            </a>
+                            <a href="#" class="about-link" onclick="openExternalLink('https://twitter.com')">
+                                <i class="fab fa-twitter"></i> Follow on Twitter
+                            </a>
+                            <a href="#" class="about-link">
+                                <i class="fas fa-envelope"></i> Contact Support
+                            </a>
+                            <a href="#" class="about-link">
+                                <i class="fas fa-file-alt"></i> Documentation
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="about-footer">
+                        <p>Made with ❤️ for learners worldwide</p>
+                        <p class="copyright">© 2024 AI-ML Roadmap Hub. All rights reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Notifications Panel -->
+<div class="notifications-panel" id="notificationsPanel">
+    <div class="notifications-panel-header">
+        <h3><i class="fas fa-bell"></i> Notifications</h3>
+        <div class="notifications-actions">
+            <button class="btn btn-ghost btn-sm" onclick="markAllAsRead()">
+                <i class="fas fa-check-double"></i> Mark all read
+            </button>
+            <button class="notifications-panel-close" onclick="closeNotificationsPanel()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="notifications-panel-body" id="notificationsPanelBody">
+        <!-- Notifications will be rendered here -->
+    </div>
+    <div class="notifications-panel-footer">
+        <button class="btn btn-ghost" onclick="openSettings('notifications')">
+            <i class="fas fa-cog"></i> Notification Settings
+        </button>
+    </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="confirm-modal" id="confirmModal">
+    <div class="confirm-modal-content">
+        <div class="confirm-modal-icon" id="confirmModalIcon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h3 id="confirmModalTitle">Are you sure?</h3>
+        <p id="confirmModalMessage">This action cannot be undone.</p>
+        <div class="confirm-modal-actions">
+            <button class="btn btn-secondary" onclick="closeConfirmModal()">Cancel</button>
+            <button class="btn btn-danger" id="confirmModalAction" onclick="executeConfirmAction()">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<!-- Video Leave Confirmation Modal -->
+<div class="video-leave-modal" id="videoLeaveModal">
+    <div class="video-leave-modal-content">
+        <div class="video-leave-icon">
+            <i class="fas fa-pause-circle"></i>
+        </div>
+        <h3>Leave Video?</h3>
+        <p>You haven't finished this video yet. What would you like to do?</p>
+        <div class="video-leave-progress">
+            <div class="video-leave-progress-bar">
+                <div class="video-leave-progress-fill" id="videoLeaveProgressFill" style="width: 45%"></div>
+            </div>
+            <span id="videoLeaveProgressText">45% watched</span>
+        </div>
+        <div class="video-leave-actions">
+            <button class="btn btn-secondary" onclick="continueWatching()">
+                <i class="fas fa-play"></i> Continue Watching
+            </button>
+            <button class="btn btn-primary" onclick="saveAndLeave()">
+                <i class="fas fa-save"></i> Save Progress & Leave
+            </button>
+            <button class="btn btn-ghost" onclick="leaveWithoutSaving()">
+                <i class="fas fa-times"></i> Leave Without Saving
+            </button>
+        </div>
+        <div class="video-leave-options">
+            <label class="checkbox-label">
+                <input type="checkbox" id="dontAskAgain" onchange="toggleDontAskAgain(this.checked)">
+                <span class="checkmark"></span>
+                Don't ask me again
+            </label>
+        </div>
+    </div>
+</div>

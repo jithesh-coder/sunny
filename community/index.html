@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusQ - Community Q&A Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <!-- Particle Container -->
+    <div id="particles"></div>
+
+    <!-- ==================== WELCOME SECTION ==================== -->
+    <section id="welcome-section" class="section active">
+        <div class="welcome-container">
+            <!-- Animated Logo -->
+            <div class="logo-container">
+                <div class="logo-ring"></div>
+                <div class="logo-ring"></div>
+                <div class="logo-ring"></div>
+                <div class="logo-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+            </div>
+            
+            <h1 class="welcome-title">
+                <span class="title-gradient">NexusQ</span>
+                <span class="title-tagline">Community Intelligence</span>
+            </h1>
+            
+            <p class="welcome-description">
+                Join the next generation of knowledge sharing. Ask questions, 
+                share insights, and connect with brilliant minds worldwide.
+            </p>
+
+            <!-- Stats Animation -->
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="15000">0</div>
+                    <div class="stat-label">Questions Asked</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="42000">0</div>
+                    <div class="stat-label">Answers Given</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="8500">0</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="welcome-actions">
+                <button class="btn btn-primary btn-glow" id="btn-get-started">
+                    <span>Get Started</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="btn btn-secondary" id="btn-learn-more">
+                    <span>Learn More</span>
+                    <i class="fas fa-play-circle"></i>
+                </button>
+            </div>
+
+            <!-- Feature Cards -->
+            <div class="feature-cards">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Instant Answers</h3>
+                    <p>Get responses in real-time from our active community</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Verified Experts</h3>
+                    <p>Trust answers from verified professionals</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Earn Rewards</h3>
+                    <p>Gain reputation and unlock exclusive features</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== AUTH SECTION ==================== -->
+    <!-- ==================== AUTH SECTION ==================== -->
+<section id="auth-section" class="section">
+    <div class="auth-container">
+        <!-- Back Button -->
+        <button class="btn-back" id="btn-back-welcome">
+            <i class="fas fa-arrow-left"></i>
+            <span>Back</span>
+        </button>
+
+        <!-- Auth Card -->
+        <div class="auth-card">
+            <!-- Tab Switcher -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Login</span>
+                </button>
+                <button class="auth-tab" data-tab="signup">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Sign Up</span>
+                </button>
+                <div class="tab-indicator"></div>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form" class="auth-form active">
+                <div class="form-header">
+                    <h2>Welcome Back!</h2>
+                    <p>Sign in to continue your journey</p>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <input type="email" id="login-email" placeholder="Email Address" required>
+                    <div class="input-line"></div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <input type="password" id="login-password" placeholder="Password" required>
+                    <div class="input-line"></div>
+                    <button type="button" class="password-toggle">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="remember-me">
+                        <span class="checkmark"></span>
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-link">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full">
+                    <span>Sign In</span>
+                    <div class="btn-loader"></div>
+                </button>
+
+                <!-- Inspirational Quote -->
+                <div class="auth-quote">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="quote-text">The only way to do great work is to love what you do</p>
+                    <span class="quote-author">— ASTRO NEXA</span>
+                </div>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signup-form" class="auth-form">
+                <div class="form-header">
+                    <h2>Create Account</h2>
+                    <p>Join our community today</p>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <input type="text" id="signup-name" placeholder="Full Name" required>
+                    <div class="input-line"></div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <input type="email" id="signup-email" placeholder="Email Address" required>
+                    <div class="input-line"></div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <input type="password" id="signup-password" placeholder="Password" required>
+                    <div class="input-line"></div>
+                    <button type="button" class="password-toggle">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+
+                <div class="password-strength">
+                    <div class="strength-bar">
+                        <div class="strength-fill"></div>
+                    </div>
+                    <span class="strength-text">Password Strength</span>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <input type="password" id="signup-confirm" placeholder="Confirm Password" required>
+                    <div class="input-line"></div>
+                </div>
+
+                <label class="checkbox-container terms">
+                    <input type="checkbox" id="accept-terms" required>
+                    <span class="checkmark"></span>
+                    <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+                </label>
+
+                <button type="submit" class="btn btn-primary btn-full">
+                    <span>Create Account</span>
+                    <div class="btn-loader"></div>
+                </button>
+
+                <!-- Inspirational Quote -->
+                <div class="auth-quote">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="quote-text">"Knowledge is power. Information is liberating. Education is the premise of progress."</p>
+                    <span class="quote-author">— Kofi Annan</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+    <!-- ==================== USER DASHBOARD ==================== -->
+    <section id="user-dashboard" class="section">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <div class="nav-logo">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <span>NexusQ</span>
+            </div>
+
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-view="feed">
+                    <i class="fas fa-home"></i>
+                    <span>Feed</span>
+                </button>
+                <button class="nav-tab" data-view="announcements">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>Announcements</span>
+                    <span class="badge" id="announcement-count">0</span>
+                </button>
+                <button class="nav-tab" data-view="my-posts">
+                    <i class="fas fa-file-alt"></i>
+                    <span>My Posts</span>
+                </button>
+            </div>
+
+            <div class="nav-actions">
+                <button class="nav-btn notifications" id="notifications-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-dot"></span>
+                </button>
+                
+                <div class="profile-dropdown">
+                    <button class="profile-btn" id="profile-btn">
+                        <div class="profile-avatar" id="user-avatar">
+                            <img src="" alt="Profile" id="user-avatar-img">
+                            <div class="avatar-fallback" id="avatar-fallback">U</div>
+                        </div>
+                        <span class="profile-name" id="user-name">User</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu" id="profile-menu">
+                        <div class="dropdown-header">
+                            <div class="dropdown-avatar" id="dropdown-avatar">
+                                <img src="" alt="Profile" id="dropdown-avatar-img">
+                                <div class="avatar-fallback" id="dropdown-fallback">U</div>
+                            </div>
+                            <div class="dropdown-info">
+                                <span class="dropdown-name" id="dropdown-name">User</span>
+                                <span class="dropdown-email" id="dropdown-email">user@email.com</span>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item" id="btn-change-avatar">
+                            <i class="fas fa-camera"></i>
+                            <span>Change Photo</span>
+                        </button>
+                        <button class="dropdown-item" id="btn-settings">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item danger" id="btn-logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Announcements Banner -->
+            <div class="announcements-banner" id="announcements-banner">
+                <div class="announcement-slider" id="announcement-slider">
+                    <!-- Announcements will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Feed Container -->
+            <div class="feed-container">
+                <!-- Create Post Card -->
+                <div class="create-post-card">
+                    <div class="create-post-avatar" id="create-avatar">
+                        <img src="" alt="Avatar" id="create-avatar-img">
+                        <div class="avatar-fallback" id="create-fallback">U</div>
+                    </div>
+                    <button class="create-post-input" id="btn-open-modal">
+                        <span>What's your question?</span>
+                    </button>
+                    <div class="create-post-actions">
+                        <button class="create-action" id="btn-attach-image">
+                            <i class="fas fa-image"></i>
+                        </button>
+                        <button class="create-action" id="btn-attach-file">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Posts Feed -->
+                <div class="posts-feed" id="posts-feed">
+                    <!-- Posts will be rendered here -->
+                </div>
+
+                <!-- Loading Skeleton -->
+                <div class="loading-skeleton" id="loading-skeleton">
+                    <div class="skeleton-card">
+                        <div class="skeleton-header">
+                            <div class="skeleton-avatar"></div>
+                            <div class="skeleton-info">
+                                <div class="skeleton-line short"></div>
+                                <div class="skeleton-line shorter"></div>
+                            </div>
+                        </div>
+                        <div class="skeleton-body">
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line medium"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Floating Action Button -->
+        <button class="fab" id="fab-new-post">
+            <i class="fas fa-plus"></i>
+            <span class="fab-tooltip">Ask Question</span>
+        </button>
+    </section>
+
+    <!-- ==================== ADMIN DASHBOARD ==================== -->
+    <section id="admin-dashboard" class="section">
+        <!-- Admin Navbar -->
+        <nav class="navbar admin-navbar">
+            <div class="nav-brand">
+                <div class="nav-logo admin">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <span>NexusQ</span>
+                <span class="admin-badge">ADMIN</span>
+            </div>
+
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-view="dashboard">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-tab" data-view="posts">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Posts</span>
+                </button>
+                <button class="nav-tab" data-view="users">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </button>
+            </div>
+
+            <div class="nav-actions">
+                <button class="nav-btn" id="admin-notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-dot"></span>
+                </button>
+                
+                <div class="profile-dropdown">
+                    <button class="profile-btn" id="admin-profile-btn">
+                        <div class="profile-avatar admin">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <span class="profile-name">Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu" id="admin-menu">
+                        <button class="dropdown-item danger" id="admin-logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Admin Main -->
+        <main class="admin-main">
+            <!-- Stats Cards -->
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-card-icon users">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <span class="stat-card-value" id="total-users">0</span>
+                        <span class="stat-card-label">Total Users</span>
+                    </div>
+                    <div class="stat-card-trend up">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>12%</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-icon posts">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <span class="stat-card-value" id="total-posts">0</span>
+                        <span class="stat-card-label">Total Posts</span>
+                    </div>
+                    <div class="stat-card-trend up">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>8%</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-icon answers">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <span class="stat-card-value" id="total-answers">0</span>
+                        <span class="stat-card-label">Total Answers</span>
+                    </div>
+                    <div class="stat-card-trend up">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>24%</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-icon active">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-card-info">
+                        <span class="stat-card-value" id="active-today">0</span>
+                        <span class="stat-card-label">Active Today</span>
+                    </div>
+                    <div class="stat-card-trend down">
+                        <i class="fas fa-arrow-down"></i>
+                        <span>3%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Content Grid -->
+            <div class="admin-grid">
+                <!-- Announcement Panel -->
+                <div class="admin-panel announcement-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-bullhorn"></i> Post Announcement</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form id="announcement-form">
+                            <div class="input-group">
+                                <textarea id="announcement-text" placeholder="Write an announcement..." rows="4"></textarea>
+                            </div>
+                            <div class="announcement-options">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="announcement-important">
+                                    <span class="checkmark"></span>
+                                    <span>Mark as Important</span>
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>Post Announcement</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Posts Management -->
+                <div class="admin-panel posts-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-file-alt"></i> Manage Posts</h3>
+                        <div class="panel-actions">
+                            <input type="text" placeholder="Search posts..." class="search-input" id="admin-search">
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="admin-posts-list" id="admin-posts-list">
+                            <!-- Posts will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </section>
+
+    <!-- ==================== MODALS ==================== -->
+    
+    <!-- Create Post Modal -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal" id="create-post-modal">
+            <div class="modal-header">
+                <h3>Ask a Question</h3>
+                <button class="modal-close" id="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="post-form" class="modal-body">
+                <div class="modal-user">
+                    <div class="modal-avatar" id="modal-avatar">
+                        <img src="" alt="Avatar" id="modal-avatar-img">
+                        <div class="avatar-fallback" id="modal-fallback">U</div>
+                    </div>
+                    <div class="modal-user-info">
+                        <span class="modal-user-name" id="modal-user-name">User</span>
+                        <span class="modal-visibility">
+                            <i class="fas fa-globe"></i> Public
+                        </span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" id="post-title" placeholder="Question title..." required>
+                </div>
+
+                <div class="input-group">
+                    <textarea id="post-content" placeholder="Describe your question in detail..." rows="5" required></textarea>
+                </div>
+
+                <div class="tags-input">
+                    <label>Tags</label>
+                    <div class="tags-container" id="tags-container">
+                        <input type="text" id="tag-input" placeholder="Add tags...">
+                    </div>
+                </div>
+
+                <div class="file-upload">
+                    <input type="file" id="file-input" hidden accept="image/*,.pdf,.doc,.docx">
+                    <button type="button" class="file-upload-btn" id="file-upload-btn">
+                        <i class="fas fa-paperclip"></i>
+                        <span>Attach File</span>
+                    </button>
+                    <div class="file-preview" id="file-preview"></div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btn-cancel-post">Cancel</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Post Question</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Answer Modal -->
+    <div class="modal-overlay" id="answer-modal-overlay">
+        <div class="modal" id="answer-modal">
+            <div class="modal-header">
+                <h3>Write an Answer</h3>
+                <button class="modal-close" id="answer-modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="answer-form" class="modal-body">
+                <div class="question-preview" id="question-preview">
+                    <!-- Question preview will be inserted -->
+                </div>
+
+                <div class="input-group">
+                    <textarea id="answer-content" placeholder="Write your answer..." rows="5" required></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btn-cancel-answer">Cancel</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Post Answer</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Profile Photo Modal -->
+    <div class="modal-overlay" id="photo-modal-overlay">
+        <div class="modal photo-modal" id="photo-modal">
+            <div class="modal-header">
+                <h3>Change Profile Photo</h3>
+                <button class="modal-close" id="photo-modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="photo-preview-container">
+                    <div class="photo-preview" id="photo-preview">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <input type="file" id="photo-input" hidden accept="image/*">
+                    <button type="button" class="btn btn-secondary" id="btn-choose-photo">
+                        <i class="fas fa-upload"></i>
+                        <span>Choose Photo</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btn-cancel-photo">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="btn-save-photo" disabled>
+                        <i class="fas fa-check"></i>
+                        <span>Save Photo</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loader">
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <span>Loading...</span>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

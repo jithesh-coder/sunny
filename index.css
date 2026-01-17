@@ -1,0 +1,214 @@
+/* welcome.css – Animated welcome screen for GoalRoad */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color: #f9fafb;
+  /* darker blackish gradient background */
+  background: radial-gradient(circle at top, #050816 0, #02010b 40%, #000000 100%);
+  overflow: hidden;
+}
+
+/* Animated background glow */
+
+.welcome-background {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(76, 201, 240, 0.18), transparent 60%),
+    radial-gradient(circle at 90% 80%, rgba(114, 9, 183, 0.25), transparent 70%),
+    radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.12), transparent 60%);
+  opacity: 0.9;
+  pointer-events: none;
+  animation: bgDrift 22s ease-in-out infinite alternate;
+}
+
+@keyframes bgDrift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(0, -18px, 0) scale(1.06);
+  }
+}
+
+/* Center layout */
+
+.welcome-container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.welcome-inner {
+  text-align: center;
+  animation: introFade 1s ease-out forwards;
+  opacity: 0;
+}
+
+/* Title */
+
+.welcome-title {
+  margin: 0 0 0.5rem;
+  font-size: clamp(2.1rem, 3.8vw, 2.8rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  /* floating animation */
+  animation: floatY 4.5s ease-in-out infinite alternate;
+}
+
+/* Animated gradient for “GoalRoad” */
+
+.brand-gradient {
+  background-image: linear-gradient(90deg, #4cc9f0, #a855f7, #f72585, #4cc9f0);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientShift 6s ease-in-out infinite alternate;
+}
+
+/* Subtitle with floating effect */
+
+.welcome-subtitle {
+  margin: 0 0 1.6rem;
+  font-size: 1rem;
+  color: #e5e7eb;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  animation: floatY 5s ease-in-out infinite alternate-reverse;
+}
+
+.author-gradient {
+  background-image: linear-gradient(90deg, #6366f1, #22c55e, #38bdf8, #6366f1);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientShift 7s ease-in-out infinite alternate;
+}
+
+/* Indicator dots */
+
+.indicator-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-bottom: 1.4rem;
+}
+
+.indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background-color: #f9fafb;
+  opacity: 0.85;
+  animation: pulse 1.3s infinite ease-in-out;
+}
+
+.indicator-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.indicator-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* Redirect text */
+
+.redirect-text {
+  margin: 0;
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #9ca3af;
+  animation: blinkText 2s infinite;
+}
+
+/* Keyframes */
+
+@keyframes introFade {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradientShift {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+/* Small floating up/down motion for text */
+@keyframes floatY {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.3;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes blinkText {
+  0%,
+  20% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  80%,
+  100% {
+    opacity: 0.6;
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 600px) {
+  .welcome-container {
+    padding: 1.2rem;
+  }
+  .welcome-title {
+    font-size: 2rem;
+  }
+}

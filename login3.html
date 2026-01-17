@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RoadMap-HUB Login - Access your personalized learning roadmaps">
+  <title>Login | RoadMap-HUB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="login3.css">
+</head>
+<body>
+  <!-- Page Transition Overlay -->
+  <div class="page-transition" id="pageTransition">
+    <div class="transition-loader">
+      <div class="loader-ring"></div>
+      <span class="loader-text">Authenticating...</span>
+    </div>
+  </div>
+
+  <!-- Animated Background -->
+  <div class="login-background"></div>
+  
+  <!-- Floating Particles -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Main Container -->
+  <div class="login-container">
+    <div class="login-card">
+      <!-- Logo Section -->
+      <div class="logo-section">
+        <div class="logo-icon">
+          <i class="fas fa-route"></i>
+        </div>
+        <h1 class="logo-title">
+          <span class="brand-gradient">RoadMap</span><span class="brand-secondary">-HUB</span>
+        </h1>
+        <p class="logo-tagline">Your Journey to Success Starts Here</p>
+      </div>
+
+      <!-- Welcome Text -->
+      <div class="welcome-section">
+        <h2 class="welcome-title">Welcome Back!</h2>
+        <p class="welcome-desc">Sign in to continue your learning journey</p>
+      </div>
+
+      <!-- Google Sign In Button -->
+      <div class="oauth-section">
+        <button type="button" class="google-btn" id="googleLogin">
+          <div class="google-icon-wrapper">
+            <svg class="google-icon" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+          </div>
+          <span class="google-btn-text">Sign in with Google</span>
+          <div class="google-btn-loader">
+            <i class="fas fa-spinner fa-spin"></i>
+          </div>
+        </button>
+      </div>
+
+      <!-- Divider -->
+      <div class="divider">
+        <span class="divider-text">or sign in with email</span>
+      </div>
+
+      <!-- Login Form -->
+      <form class="login-form" id="loginForm" novalidate>
+        <!-- Email Input -->
+        <div class="input-group">
+          <div class="input-wrapper">
+            <div class="input-icon-wrapper">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              class="input-field" 
+              placeholder=" "
+              required
+              autocomplete="email"
+            >
+            <label for="email" class="input-label">Email Address</label>
+            <div class="input-border"></div>
+            <div class="input-glow"></div>
+          </div>
+          <span class="error-message" id="emailError">
+            <i class="fas fa-exclamation-circle"></i>
+            <span class="error-text"></span>
+          </span>
+        </div>
+
+        <!-- Phone Number Input -->
+        <div class="input-group">
+          <div class="input-wrapper">
+            <div class="input-icon-wrapper">
+              <i class="fas fa-phone"></i>
+            </div>
+            <input 
+              type="tel" 
+              id="phone" 
+              name="phone" 
+              class="input-field" 
+              placeholder=" "
+              required
+              autocomplete="tel"
+              maxlength="10"
+            >
+            <label for="phone" class="input-label">Phone Number</label>
+            <div class="input-border"></div>
+            <div class="input-glow"></div>
+          </div>
+          <span class="error-message" id="phoneError">
+            <i class="fas fa-exclamation-circle"></i>
+            <span class="error-text"></span>
+          </span>
+        </div>
+
+        <!-- Password Input -->
+        <div class="input-group">
+          <div class="input-wrapper">
+            <div class="input-icon-wrapper">
+              <i class="fas fa-lock"></i>
+            </div>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              class="input-field" 
+              placeholder=" "
+              required
+              autocomplete="current-password"
+            >
+            <label for="password" class="input-label">Password</label>
+            <button type="button" class="password-toggle" id="passwordToggle" aria-label="Toggle password visibility">
+              <i class="fas fa-eye"></i>
+            </button>
+            <div class="input-border"></div>
+            <div class="input-glow"></div>
+          </div>
+          <span class="error-message" id="passwordError">
+            <i class="fas fa-exclamation-circle"></i>
+            <span class="error-text"></span>
+          </span>
+        </div>
+
+        <!-- Remember & Forgot -->
+        <div class="form-options">
+          <label class="remember-me">
+            <input type="checkbox" id="rememberMe">
+            <span class="checkbox-custom">
+              <i class="fas fa-check"></i>
+            </span>
+            <span class="remember-text">Remember me</span>
+          </label>
+          <a href="forgot.html" class="forgot-link" id="forgotLink">
+            <span>Forgot Password?</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="login-btn" id="loginBtn">
+          <span class="btn-content">
+            <span class="btn-text">Sign In</span>
+            <i class="fas fa-arrow-right btn-arrow"></i>
+          </span>
+          <span class="btn-loader">
+            <i class="fas fa-circle-notch fa-spin"></i>
+          </span>
+          <span class="btn-success">
+            <i class="fas fa-check"></i>
+            <span>Success!</span>
+          </span>
+        </button>
+
+        <!-- General Error -->
+        <div class="general-error" id="generalError">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span id="generalErrorText"></span>
+        </div>
+      </form>
+
+      <!-- Sign Up Link -->
+      <div class="signup-section">
+        <p class="signup-text">
+          Don't have an account? 
+          <a href="signup.html" class="signup-link" id="signupLink">
+            <span>Create Account</span>
+            <i class="fas fa-user-plus"></i>
+          </a>
+        </p>
+      </div>
+
+      <!-- Security Badge -->
+      <div class="security-badge">
+        <div class="badge-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <div class="badge-text">
+          <span class="badge-title">Secure Login</span>
+          <span class="badge-desc">256-bit SSL encryption</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User Profile Modal -->
+  <div class="user-modal" id="userModal">
+    <div class="user-modal-backdrop"></div>
+    <div class="user-modal-content">
+      <div class="modal-header">
+        <div class="modal-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h3 class="modal-title">Welcome to RoadMap-HUB!</h3>
+        <p class="modal-subtitle">You've successfully signed in</p>
+      </div>
+      <div class="user-profile">
+        <div class="avatar-wrapper">
+          <img src="" alt="Profile" class="user-avatar" id="userAvatar">
+          <div class="avatar-badge">
+            <i class="fab fa-google"></i>
+          </div>
+        </div>
+        <h4 class="user-name" id="userName"></h4>
+        <p class="user-email" id="userEmail"></p>
+      </div>
+      <button class="continue-btn" id="continueBtn">
+        <span>Continue to Dashboard</span>
+        <i class="fas fa-arrow-right"></i>
+      </button>
+      <button class="modal-close" id="modalClose">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <div class="toast-icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <div class="toast-content">
+      <span class="toast-title">Success!</span>
+      <span class="toast-message">Login successful.</span>
+    </div>
+    <div class="toast-progress"></div>
+    <button class="toast-close" id="toastClose">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <!-- Firebase + Login Script (ES Module) -->
+  <script type="module" src="login3.js"></script>
+</body>
+</html>
