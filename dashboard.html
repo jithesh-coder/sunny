@@ -5,14 +5,414 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="RoadMap-HUB Dashboard - Track your learning journey">
   <title>Dashboard | RoadMap-HUB</title>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="dashboard.css">
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* ============================================
+       CSS VARIABLES
+       ============================================ */
+    :root {
+      /* Primary Colors */
+      --primary-cyan: #4cc9f0;
+      --primary-purple: #a855f7;
+      --primary-pink: #f72585;
+      --primary-blue: #3b82f6;
+      
+      /* Status Colors */
+      --success-green: #22c55e;
+      --error-red: #ef4444;
+      --warning-orange: #f59e0b;
+      --info-blue: #0ea5e9;
+      
+      /* Background Colors */
+      --bg-dark: #050816;
+      --bg-darker: #02010b;
+      --bg-card: rgba(255, 255, 255, 0.03);
+      --bg-card-hover: rgba(255, 255, 255, 0.06);
+      --bg-sidebar: rgba(10, 10, 30, 0.95);
+      --bg-input: rgba(255, 255, 255, 0.02);
+      
+      /* Text Colors */
+      --text-primary: #f9fafb;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+      --text-dark: #1f2937;
+      
+      /* Border Colors */
+      --border-light: rgba(255, 255, 255, 0.06);
+      --border-medium: rgba(255, 255, 255, 0.12);
+      --border-focus: rgba(76, 201, 240, 0.5);
+      
+      /* Shadows */
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.4);
+      --shadow-glow: 0 0 30px rgba(76, 201, 240, 0.15);
+      
+      /* Transitions */
+      --transition-fast: 0.15s ease;
+      --transition-normal: 0.3s ease;
+      --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      
+      /* Border Radius */
+      --radius-xs: 4px;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --radius-full: 9999px;
+      
+      /* Spacing */
+      --sidebar-width: 280px;
+      --sidebar-collapsed: 80px;
+      --header-height: 70px;
+      
+      /* Z-Index */
+      --z-sidebar: 100;
+      --z-header: 90;
+      --z-dropdown: 200;
+      --z-modal: 300;
+      --z-toast: 400;
+      --z-loader: 500;
+    }
+
+    /* ============================================
+       RESET & BASE
+       ============================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      color: var(--text-primary);
+      background: var(--bg-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    img { max-width: 100%; display: block; }
+    ul, ol { list-style: none; }
+    input, textarea, select { font-family: inherit; font-size: inherit; }
+
+    /* ============================================
+       LAYOUT & ANIMATIONS
+       ============================================ */
+    .dashboard-background {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 10% 20%, rgba(76, 201, 240, 0.08), transparent 40%),
+                  radial-gradient(circle at 90% 80%, rgba(114, 9, 183, 0.12), transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .dashboard-wrapper {
+      display: flex;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ============================================
+       SIDEBAR
+       ============================================ */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: var(--bg-sidebar);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+      z-index: var(--z-sidebar);
+      transition: transform var(--transition-normal), width var(--transition-normal);
+    }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border-light);
+      min-height: var(--header-height);
+    }
+
+    .logo { display: flex; align-items: center; gap: 0.75rem; }
+    .logo-icon {
+      width: 42px; height: 42px;
+      background: linear-gradient(135deg, var(--primary-cyan), var(--primary-purple));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; color: white;
+    }
+    .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
+    .brand-gradient {
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--primary-cyan), var(--primary-purple));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .brand-secondary { font-weight: 700; color: var(--text-primary); }
+
+    .sidebar-toggle {
+      width: 32px; height: 32px;
+      border-radius: var(--radius-sm);
+      background: rgba(255,255,255,0.05);
+      color: var(--text-secondary);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .sidebar-nav { flex: 1; padding: 1rem 0; overflow-y: auto; }
+    .nav-list { display: flex; flex-direction: column; gap: 0.25rem; padding: 0 0.75rem; }
+    .nav-link {
+      display: flex; align-items: center; gap: 0.85rem;
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      font-weight: 500;
+      transition: var(--transition-fast);
+    }
+    .nav-link:hover { background: rgba(255,255,255,0.05); color: var(--text-primary); }
+    .nav-item.active .nav-link {
+      background: linear-gradient(135deg, rgba(76,201,240,0.1), rgba(168,85,247,0.1));
+      color: var(--primary-cyan);
+    }
+    .nav-link i { width: 24px; text-align: center; font-size: 1.1rem; }
+    
+    .sidebar-footer { padding: 1rem; border-top: 1px solid var(--border-light); }
+    .upgrade-card {
+      background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(76,201,240,0.1));
+      border: 1px solid rgba(168,85,247,0.2);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem; text-align: center;
+    }
+    .upgrade-btn {
+      width: 100%; margin-top: 10px; padding: 0.65rem;
+      background: linear-gradient(135deg, var(--primary-purple), var(--primary-pink));
+      border-radius: var(--radius-md);
+      color: white; font-weight: 600;
+    }
+
+    /* ============================================
+       MAIN CONTENT & HEADER
+       ============================================ */
+    .main-content {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      transition: margin-left var(--transition-normal);
+    }
+
+    .top-header {
+      position: sticky; top: 0;
+      height: var(--header-height);
+      background: rgba(5, 8, 22, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-light);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; z-index: var(--z-header);
+    }
+
+    .header-left { display: flex; align-items: center; gap: 1.5rem; flex: 1; }
+    
+    .mobile-menu-btn {
+      display: none; /* Hidden on desktop */
+      width: 40px; height: 40px;
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,0.05);
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+      align-items: center; justify-content: center;
+    }
+
+    .search-box {
+      display: flex; align-items: center; gap: 0.75rem;
+      width: 100%; max-width: 400px;
+      padding: 0.75rem 1rem;
+      background: var(--bg-input);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+    }
+    .search-box input {
+      flex: 1; background: none; border: none; outline: none;
+      color: var(--text-primary);
+    }
+
+    .header-right { display: flex; align-items: center; gap: 1.25rem; }
+    .streak-counter {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(251, 146, 60, 0.15);
+      border-radius: var(--radius-full);
+      color: #fb923c; font-weight: 700;
+    }
+
+    .user-profile-header {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.5rem; border-radius: var(--radius-lg);
+      cursor: pointer;
+    }
+    .user-avatar-small { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; }
+    .user-info-header { display: flex; flex-direction: column; line-height: 1.2; }
+    .user-name-header { font-weight: 600; font-size: 0.9rem; }
+    .user-role { font-size: 0.75rem; color: var(--text-secondary); }
+
+    /* ============================================
+       DASHBOARD SECTIONS & GRIDS
+       ============================================ */
+    .dashboard-content { padding: 2rem; }
+    .dashboard-section { display: none; animation: fadeIn 0.5s ease; }
+    .dashboard-section.active { display: block; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .welcome-banner {
+      background: linear-gradient(135deg, rgba(76,201,240,0.1), rgba(168,85,247,0.15));
+      border: 1px solid rgba(168,85,247,0.2);
+      border-radius: var(--radius-xl);
+      padding: 2rem; margin-bottom: 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem; display: flex; gap: 1rem;
+    }
+    .stat-icon {
+      width: 50px; height: 50px; border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+    }
+    .stat-icon.blue { background: rgba(76,201,240,0.15); color: var(--primary-cyan); }
+    .stat-icon.purple { background: rgba(168,85,247,0.15); color: var(--primary-purple); }
+    .stat-icon.green { background: rgba(34,197,94,0.15); color: var(--success-green); }
+    .stat-icon.orange { background: rgba(245,158,11,0.15); color: var(--warning-orange); }
+
+    .dashboard-grid {
+      display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;
+    }
+    .grid-column { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .dashboard-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-light);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .card-content { padding: 1.5rem; }
+
+    /* Roadmaps */
+    .current-roadmap-card { display: flex; gap: 1.5rem; }
+    .roadmap-thumbnail {
+      width: 120px; height: 120px;
+      background: linear-gradient(135deg, rgba(76,201,240,0.2), rgba(168,85,247,0.2));
+      border-radius: var(--radius-lg);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .progress-bar {
+      height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 10px;
+    }
+    .progress-fill { height: 100%; background: var(--primary-cyan); border-radius: 10px; }
+
+    /* Goals */
+    .goal-item {
+      display: flex; align-items: center; gap: 1rem; padding: 0.85rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .goal-checkbox {
+      width: 22px; height: 22px; border: 2px solid var(--border-medium); border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .goal-item.completed .goal-checkbox { background: var(--success-green); border-color: var(--success-green); }
+
+    /* Settings Form */
+    .settings-container { display: grid; gap: 1.5rem; max-width: 800px; margin: 0 auto; }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-secondary); }
+    .form-group input, .form-group textarea {
+      width: 100%; padding: 0.85rem 1rem;
+      background: var(--bg-input);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+    }
+    .form-group input:focus { border-color: var(--primary-cyan); outline: none; }
+
+    /* ============================================
+       RESPONSIVE DESIGN (MOBILE)
+       ============================================ */
+    
+    /* Tablet & Mobile Breakpoint */
+    @media (max-width: 992px) {
+      .sidebar {
+        transform: translateX(-100%);
+        box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+      }
+      .sidebar.open { transform: translateX(0); }
+      .sidebar-toggle { display: none; } /* Hide internal toggle, use header btn */
+      
+      .main-content { margin-left: 0; }
+      .mobile-menu-btn { display: flex; }
+      
+      .dashboard-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      
+      .search-box { width: 100%; }
+      .search-box kbd { display: none; }
+    }
+
+    /* Small Mobile Breakpoint */
+    @media (max-width: 768px) {
+      .dashboard-content { padding: 1rem; }
+      .top-header { padding: 0 1rem; }
+      
+      .header-right { gap: 0.75rem; }
+      .user-info-header, .streak-label { display: none; }
+      
+      .welcome-banner { flex-direction: column; text-align: center; gap: 1.5rem; }
+      .welcome-stats { width: 100%; justify-content: space-around; }
+      
+      .stats-grid { grid-template-columns: 1fr; }
+      
+      .current-roadmap-card { flex-direction: column; }
+      .roadmap-thumbnail { width: 100%; height: 100px; flex-direction: row; gap: 10px; }
+      
+      .resource-categories { grid-template-columns: repeat(2, 1fr); }
+      .settings-container { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-  <!-- Page Loader -->
+
   <div class="page-loader" id="pageLoader">
     <div class="loader-content">
       <div class="loader-logo">
@@ -21,24 +421,18 @@
       <div class="loader-bar">
         <div class="loader-progress"></div>
       </div>
-      <p class="loader-text">Loading your dashboard...</p>
+      <p class="loader-text">Loading RoadMap-HUB...</p>
     </div>
   </div>
 
-  <!-- Animated Background -->
   <div class="dashboard-background"></div>
-  <div class="particles" id="particles"></div>
 
-  <!-- Main Wrapper -->
   <div class="dashboard-wrapper">
     
-    <!-- Sidebar Navigation -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <div class="logo">
-          <div class="logo-icon">
-            <i class="fas fa-route"></i>
-          </div>
+          <div class="logo-icon"><i class="fas fa-route"></i></div>
           <div class="logo-text">
             <span class="brand-gradient">RoadMap</span>
             <span class="brand-secondary">-HUB</span>
@@ -51,89 +445,51 @@
 
       <nav class="sidebar-nav">
         <ul class="nav-list">
-          <li class="nav-item active" data-section="overview">
-            <a href="#overview" class="nav-link">
-              <i class="fas fa-th-large"></i>
-              <span>Overview</span>
-            </a>
+          <li class="nav-item active" onclick="switchSection('overview')">
+            <a href="#" class="nav-link"><i class="fas fa-th-large"></i><span>Overview</span></a>
           </li>
-          <li class="nav-item" data-section="roadmaps">
-            <a href="#roadmaps" class="nav-link">
-              <i class="fas fa-map-marked-alt"></i>
-              <span>My Roadmaps</span>
-              <span class="nav-badge">3</span>
-            </a>
+          <li class="nav-item" onclick="switchSection('roadmaps')">
+            <a href="#" class="nav-link"><i class="fas fa-map-marked-alt"></i><span>My Roadmaps</span> <span class="nav-badge">3</span></a>
           </li>
-          <li class="nav-item" data-section="explore">
-            <a href="#explore" class="nav-link">
-              <i class="fas fa-compass"></i>
-              <span>Explore</span>
-            </a>
+          <li class="nav-item" onclick="switchSection('explore')">
+            <a href="#" class="nav-link"><i class="fas fa-compass"></i><span>Explore</span></a>
           </li>
-          <li class="nav-item" data-section="progress">
-            <a href="#progress" class="nav-link">
-              <i class="fas fa-chart-line"></i>
-              <span>Progress</span>
-            </a>
+          <li class="nav-item" onclick="switchSection('progress')">
+            <a href="#" class="nav-link"><i class="fas fa-chart-line"></i><span>Progress</span></a>
           </li>
-          <li class="nav-item" data-section="resources">
-            <a href="#resources" class="nav-link">
-              <i class="fas fa-book-open"></i>
-              <span>Resources</span>
-            </a>
+          <li class="nav-item" onclick="switchSection('resources')">
+            <a href="#" class="nav-link"><i class="fas fa-book-open"></i><span>Resources</span></a>
           </li>
-          <li class="nav-item" data-section="certificates">
-            <a href="#certificates" class="nav-link">
-              <i class="fas fa-award"></i>
-              <span>Certificates</span>
-            </a>
+          <li class="nav-item" onclick="switchSection('certificates')">
+            <a href="#" class="nav-link"><i class="fas fa-award"></i><span>Certificates</span></a>
           </li>
-          <li class="nav-item" data-section="community">
-            <a href="#community" class="nav-link">
-              <i class="fas fa-users"></i>
-              <span>Community</span>
-            </a>
+          <li class="nav-item" onclick="switchSection('community')">
+            <a href="#" class="nav-link"><i class="fas fa-users"></i><span>Community</span></a>
           </li>
         </ul>
-
         <div class="nav-divider"></div>
-
         <ul class="nav-list secondary">
-          <li class="nav-item" data-section="settings">
-            <a href="#settings" class="nav-link">
-              <i class="fas fa-cog"></i>
-              <span>Settings</span>
-            </a>
+          <li class="nav-item" onclick="switchSection('settings')">
+            <a href="#" class="nav-link"><i class="fas fa-cog"></i><span>Settings</span></a>
           </li>
-          <li class="nav-item" data-section="help">
-            <a href="#help" class="nav-link">
-              <i class="fas fa-question-circle"></i>
-              <span>Help & Support</span>
-            </a>
+          <li class="nav-item" onclick="switchSection('help')">
+            <a href="#" class="nav-link"><i class="fas fa-question-circle"></i><span>Help & Support</span></a>
           </li>
         </ul>
       </nav>
 
-      <!-- Sidebar Footer - Upgrade Card -->
       <div class="sidebar-footer">
         <div class="upgrade-card">
-          <div class="upgrade-icon">
-            <i class="fas fa-crown"></i>
-          </div>
+          <div class="upgrade-icon"><i class="fas fa-crown"></i></div>
           <h4>Upgrade to Pro</h4>
-          <p>Unlock all roadmaps & features</p>
-          <button class="upgrade-btn">
-            <span>Upgrade Now</span>
-            <i class="fas fa-arrow-right"></i>
-          </button>
+          <p>Unlock all roadmaps</p>
+          <button class="upgrade-btn">Upgrade Now</button>
         </div>
       </div>
     </aside>
 
-    <!-- Main Content -->
     <main class="main-content" id="mainContent">
       
-      <!-- Top Header -->
       <header class="top-header">
         <div class="header-left">
           <button class="mobile-menu-btn" id="mobileMenuBtn">
@@ -141,1636 +497,314 @@
           </button>
           <div class="search-box">
             <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search roadmaps, resources..." id="searchInput">
+            <input type="text" placeholder="Search roadmaps...">
             <kbd>⌘K</kbd>
           </div>
         </div>
 
         <div class="header-right">
-          <!-- Streak Counter -->
-          <div class="streak-counter" id="streakCounter">
-            <div class="streak-flame">
-              <i class="fas fa-fire"></i>
-            </div>
-            <span class="streak-count" id="streakCount">7</span>
-            <span class="streak-label">Day Streak</span>
+          <div class="streak-counter">
+            <div class="streak-flame"><i class="fas fa-fire"></i></div>
+            <span class="streak-count">7</span>
+            <span class="streak-label">Days</span>
           </div>
+          
+          <button class="notification-btn">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge">3</span>
+          </button>
 
-          <!-- Notifications -->
-          <div class="header-notifications">
-            <button class="notification-btn" id="notificationBtn">
-              <i class="fas fa-bell"></i>
-              <span class="notification-badge">3</span>
-            </button>
-            <div class="notification-dropdown" id="notificationDropdown">
-              <div class="dropdown-header">
-                <h4>Notifications</h4>
-                <button class="mark-read-btn">Mark all read</button>
-              </div>
-              <div class="notification-list">
-                <div class="notification-item unread">
-                  <div class="notification-icon success">
-                    <i class="fas fa-check-circle"></i>
-                  </div>
-                  <div class="notification-content">
-                    <p>Completed <strong>HTML Basics</strong> module!</p>
-                    <span class="notification-time">2 hours ago</span>
-                  </div>
-                </div>
-                <div class="notification-item unread">
-                  <div class="notification-icon info">
-                    <i class="fas fa-trophy"></i>
-                  </div>
-                  <div class="notification-content">
-                    <p>You earned the <strong>Week Warrior</strong> badge!</p>
-                    <span class="notification-time">5 hours ago</span>
-                  </div>
-                </div>
-                <div class="notification-item unread">
-                  <div class="notification-icon warning">
-                    <i class="fas fa-clock"></i>
-                  </div>
-                  <div class="notification-content">
-                    <p>Don't break your streak! Learn something today.</p>
-                    <span class="notification-time">1 day ago</span>
-                  </div>
-                </div>
-              </div>
-              <div class="dropdown-footer">
-                <a href="#notifications">View all notifications</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- User Profile -->
-          <div class="user-profile-header" id="userProfileHeader">
-            <img src="" alt="User" class="user-avatar-small" id="headerAvatar">
+          <div class="user-profile-header">
+            <img src="https://ui-avatars.com/api/?name=User&background=4cc9f0&color=fff" alt="User" class="user-avatar-small">
             <div class="user-info-header">
-              <span class="user-name-header" id="headerUserName">Loading...</span>
+              <span class="user-name-header">User</span>
               <span class="user-role">Student</span>
-            </div>
-            <i class="fas fa-chevron-down"></i>
-            
-            <!-- User Dropdown -->
-            <div class="user-dropdown" id="userDropdown">
-              <div class="dropdown-user-info">
-                <img src="" alt="User" class="dropdown-avatar" id="dropdownAvatar">
-                <div>
-                  <h4 id="dropdownUserName">User</h4>
-                  <p id="dropdownUserEmail">user@example.com</p>
-                </div>
-              </div>
-              <div class="dropdown-divider"></div>
-              <ul class="dropdown-menu">
-                <li><a href="#profile"><i class="fas fa-user"></i> My Profile</a></li>
-                <li><a href="#settings"><i class="fas fa-cog"></i> Settings</a></li>
-                <li><a href="#billing"><i class="fas fa-credit-card"></i> Billing</a></li>
-              </ul>
-              <div class="dropdown-divider"></div>
-              <button class="logout-btn" id="logoutBtn">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Sign Out</span>
-              </button>
             </div>
           </div>
         </div>
       </header>
 
-      <!-- Dashboard Sections -->
       <div class="dashboard-content">
         
-        <!-- ============================================ -->
-        <!-- OVERVIEW SECTION -->
-        <!-- ============================================ -->
         <section class="dashboard-section active" id="section-overview">
-          
-          <!-- Welcome Banner -->
           <div class="welcome-banner">
-            <div class="welcome-content">
-              <div class="welcome-text">
-                <h1>Welcome back, <span id="welcomeUserName">User</span>! 👋</h1>
-                <p>Continue your learning journey. You're making great progress!</p>
-              </div>
+            <div class="welcome-text">
+              <h1>Welcome back, <span>User</span>! 👋</h1>
+              <p>Continue your learning journey. You're making great progress!</p>
               <div class="welcome-stats">
                 <div class="welcome-stat">
-                  <span class="stat-value" id="totalHoursLearned">24</span>
-                  <span class="stat-label">Hours Learned</span>
+                  <span class="stat-value">24</span>
+                  <span class="stat-label">Hours</span>
                 </div>
                 <div class="welcome-stat">
-                  <span class="stat-value" id="modulesCompleted">12</span>
-                  <span class="stat-label">Modules Done</span>
-                </div>
-                <div class="welcome-stat">
-                  <span class="stat-value" id="currentStreak">7</span>
-                  <span class="stat-label">Day Streak</span>
+                  <span class="stat-value">12</span>
+                  <span class="stat-label">Modules</span>
                 </div>
               </div>
             </div>
-            <div class="welcome-illustration">
-              <div class="illustration-circle">
-                <i class="fas fa-rocket"></i>
-              </div>
+            <div class="illustration-circle">
+              <i class="fas fa-rocket"></i>
             </div>
           </div>
 
-          <!-- Quick Stats Cards -->
           <div class="stats-grid">
-            <div class="stat-card" data-aos="fade-up">
-              <div class="stat-icon blue">
-                <i class="fas fa-road"></i>
-              </div>
+            <div class="stat-card">
+              <div class="stat-icon blue"><i class="fas fa-road"></i></div>
               <div class="stat-info">
-                <h3 id="activeRoadmapsCount">3</h3>
+                <h3>3</h3>
                 <p>Active Roadmaps</p>
               </div>
-              <div class="stat-trend up">
-                <i class="fas fa-arrow-up"></i>
-                <span>+1 this week</span>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon purple"><i class="fas fa-tasks"></i></div>
+              <div class="stat-info">
+                <h3>47</h3>
+                <p>Tasks Done</p>
               </div>
             </div>
-
-            <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
-              <div class="stat-icon purple">
-                <i class="fas fa-tasks"></i>
-              </div>
+            <div class="stat-card">
+              <div class="stat-icon green"><i class="fas fa-trophy"></i></div>
               <div class="stat-info">
-                <h3 id="tasksCompleted">47</h3>
-                <p>Tasks Completed</p>
-              </div>
-              <div class="stat-trend up">
-                <i class="fas fa-arrow-up"></i>
-                <span>+12 this week</span>
+                <h3>5</h3>
+                <p>Badges</p>
               </div>
             </div>
-
-            <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
-              <div class="stat-icon green">
-                <i class="fas fa-trophy"></i>
-              </div>
+            <div class="stat-card">
+              <div class="stat-icon orange"><i class="fas fa-clock"></i></div>
               <div class="stat-info">
-                <h3 id="badgesEarned">5</h3>
-                <p>Badges Earned</p>
-              </div>
-              <div class="stat-trend up">
-                <i class="fas fa-arrow-up"></i>
-                <span>+2 this week</span>
-              </div>
-            </div>
-
-            <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
-              <div class="stat-icon orange">
-                <i class="fas fa-clock"></i>
-              </div>
-              <div class="stat-info">
-                <h3 id="hoursThisWeek">8.5</h3>
-                <p>Hours This Week</p>
-              </div>
-              <div class="stat-trend up">
-                <i class="fas fa-arrow-up"></i>
-                <span>+2.5 vs last week</span>
+                <h3>8.5</h3>
+                <p>Hours/Week</p>
               </div>
             </div>
           </div>
 
-          <!-- Main Dashboard Grid -->
           <div class="dashboard-grid">
-            
-            <!-- Left Column -->
-            <div class="grid-column main-column">
-              
-              <!-- Continue Learning Section -->
-              <div class="dashboard-card continue-learning">
+            <div class="grid-column">
+              <div class="dashboard-card">
                 <div class="card-header">
                   <h2><i class="fas fa-play-circle"></i> Continue Learning</h2>
-                  <a href="#roadmaps" class="view-all-link">View All <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="card-content">
-                  <div class="current-roadmap-card" id="currentRoadmapCard">
+                  <div class="current-roadmap-card">
                     <div class="roadmap-thumbnail">
-                      <div class="thumbnail-icon">
-                        <i class="fas fa-code"></i>
-                      </div>
+                      <div class="thumbnail-icon"><i class="fas fa-code"></i></div>
                       <div class="roadmap-level beginner">Beginner</div>
                     </div>
                     <div class="roadmap-info">
                       <h3>Frontend Web Development</h3>
-                      <p class="roadmap-description">Master HTML, CSS, JavaScript and React to build modern websites</p>
-                      <div class="roadmap-meta">
-                        <span><i class="fas fa-clock"></i> 3-6 months</span>
-                        <span><i class="fas fa-layer-group"></i> 8 modules</span>
-                        <span><i class="fas fa-code-branch"></i> 15 projects</span>
+                      <p>Master HTML, CSS, JavaScript and React</p>
+                      <div class="progress-bar">
+                        <div class="progress-fill" style="width: 45%"></div>
                       </div>
-                      <div class="progress-section">
-                        <div class="progress-header">
-                          <span class="progress-text">Progress</span>
-                          <span class="progress-percentage">45%</span>
-                        </div>
-                        <div class="progress-bar">
-                          <div class="progress-fill" style="width: 45%"></div>
-                        </div>
-                      </div>
-                      <div class="current-step">
-                        <span class="step-label">Current:</span>
-                        <span class="step-name">CSS Flexbox & Grid</span>
-                      </div>
+                      <p style="font-size: 0.8rem; margin-top: 5px; color: var(--text-secondary);">45% Complete</p>
                     </div>
-                    <button class="continue-btn">
-                      <span>Continue</span>
-                      <i class="fas fa-arrow-right"></i>
-                    </button>
+                    <button class="continue-btn">Continue</button>
                   </div>
                 </div>
               </div>
 
-              <!-- Weekly Goals Section -->
-              <div class="dashboard-card weekly-goals">
+              <div class="dashboard-card">
+                <div class="card-header">
+                  <h2><i class="fas fa-chart-area"></i> Activity</h2>
+                </div>
+                <div class="card-content">
+                  <div class="activity-heatmap" style="display: flex; gap: 5px; flex-wrap: wrap;">
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid-column side-column">
+              <div class="dashboard-card">
                 <div class="card-header">
                   <h2><i class="fas fa-bullseye"></i> Weekly Goals</h2>
-                  <button class="edit-goals-btn" id="editGoalsBtn">
-                    <i class="fas fa-edit"></i>
-                  </button>
                 </div>
                 <div class="card-content">
-                  <div class="goals-list" id="goalsList">
+                  <div class="goals-list">
                     <div class="goal-item completed">
-                      <div class="goal-checkbox">
-                        <i class="fas fa-check"></i>
-                      </div>
-                      <div class="goal-content">
-                        <span class="goal-text">Complete HTML basics module</span>
-                        <span class="goal-xp">+50 XP</span>
-                      </div>
-                    </div>
-                    <div class="goal-item completed">
-                      <div class="goal-checkbox">
-                        <i class="fas fa-check"></i>
-                      </div>
-                      <div class="goal-content">
-                        <span class="goal-text">Build a personal portfolio page</span>
-                        <span class="goal-xp">+100 XP</span>
-                      </div>
+                      <div class="goal-checkbox"><i class="fas fa-check"></i></div>
+                      <span class="goal-text">HTML Basics</span>
                     </div>
                     <div class="goal-item">
                       <div class="goal-checkbox"></div>
-                      <div class="goal-content">
-                        <span class="goal-text">Learn CSS Flexbox fundamentals</span>
-                        <span class="goal-xp">+75 XP</span>
-                      </div>
+                      <span class="goal-text">CSS Flexbox</span>
                     </div>
                     <div class="goal-item">
                       <div class="goal-checkbox"></div>
-                      <div class="goal-content">
-                        <span class="goal-text">Complete 2 coding challenges</span>
-                        <span class="goal-xp">+60 XP</span>
-                      </div>
-                    </div>
-                    <div class="goal-item">
-                      <div class="goal-checkbox"></div>
-                      <div class="goal-content">
-                        <span class="goal-text">Watch CSS Grid tutorial</span>
-                        <span class="goal-xp">+40 XP</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="goals-progress">
-                    <div class="goals-progress-bar">
-                      <div class="goals-progress-fill" style="width: 40%"></div>
-                    </div>
-                    <span class="goals-progress-text">2 of 5 goals completed</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Learning Activity Chart -->
-              <div class="dashboard-card activity-chart">
-                <div class="card-header">
-                  <h2><i class="fas fa-chart-area"></i> Learning Activity</h2>
-                  <div class="chart-filters">
-                    <button class="chart-filter active" data-period="week">Week</button>
-                    <button class="chart-filter" data-period="month">Month</button>
-                    <button class="chart-filter" data-period="year">Year</button>
-                  </div>
-                </div>
-                <div class="card-content">
-                  <div class="activity-heatmap" id="activityHeatmap">
-                    <!-- Heatmap will be generated by JavaScript -->
-                  </div>
-                  <div class="activity-legend">
-                    <span class="legend-label">Less</span>
-                    <div class="legend-colors">
-                      <div class="legend-color" style="background: rgba(76, 201, 240, 0.1)"></div>
-                      <div class="legend-color" style="background: rgba(76, 201, 240, 0.3)"></div>
-                      <div class="legend-color" style="background: rgba(76, 201, 240, 0.5)"></div>
-                      <div class="legend-color" style="background: rgba(76, 201, 240, 0.7)"></div>
-                      <div class="legend-color" style="background: rgba(76, 201, 240, 1)"></div>
-                    </div>
-                    <span class="legend-label">More</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Right Column -->
-            <div class="grid-column side-column">
-              
-              <!-- Skill Radar Chart -->
-              <div class="dashboard-card skill-radar">
-                <div class="card-header">
-                  <h2><i class="fas fa-chart-radar"></i> Skills Overview</h2>
-                </div>
-                <div class="card-content">
-                  <div class="radar-chart" id="radarChart">
-                    <canvas id="skillRadarCanvas"></canvas>
-                  </div>
-                  <div class="skill-list">
-                    <div class="skill-item">
-                      <span class="skill-name">HTML</span>
-                      <div class="skill-bar">
-                        <div class="skill-fill" style="width: 85%"></div>
-                      </div>
-                      <span class="skill-level">85%</span>
-                    </div>
-                    <div class="skill-item">
-                      <span class="skill-name">CSS</span>
-                      <div class="skill-bar">
-                        <div class="skill-fill" style="width: 70%"></div>
-                      </div>
-                      <span class="skill-level">70%</span>
-                    </div>
-                    <div class="skill-item">
-                      <span class="skill-name">JavaScript</span>
-                      <div class="skill-bar">
-                        <div class="skill-fill" style="width: 45%"></div>
-                      </div>
-                      <span class="skill-level">45%</span>
-                    </div>
-                    <div class="skill-item">
-                      <span class="skill-name">React</span>
-                      <div class="skill-bar">
-                        <div class="skill-fill" style="width: 20%"></div>
-                      </div>
-                      <span class="skill-level">20%</span>
+                      <span class="goal-text">JS Variables</span>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Recent Achievements -->
-              <div class="dashboard-card achievements">
+              <div class="dashboard-card">
                 <div class="card-header">
-                  <h2><i class="fas fa-medal"></i> Recent Achievements</h2>
-                  <a href="#certificates" class="view-all-link">View All</a>
+                  <h2><i class="fas fa-chart-radar"></i> Skills</h2>
                 </div>
                 <div class="card-content">
-                  <div class="achievements-list">
-                    <div class="achievement-item new">
-                      <div class="achievement-badge gold">
-                        <i class="fas fa-fire"></i>
-                      </div>
-                      <div class="achievement-info">
-                        <h4>Week Warrior</h4>
-                        <p>7-day learning streak</p>
-                      </div>
-                      <span class="achievement-date">Today</span>
-                    </div>
-                    <div class="achievement-item">
-                      <div class="achievement-badge purple">
-                        <i class="fas fa-code"></i>
-                      </div>
-                      <div class="achievement-info">
-                        <h4>HTML Master</h4>
-                        <p>Completed HTML module</p>
-                      </div>
-                      <span class="achievement-date">2 days ago</span>
-                    </div>
-                    <div class="achievement-item">
-                      <div class="achievement-badge blue">
-                        <i class="fas fa-rocket"></i>
-                      </div>
-                      <div class="achievement-info">
-                        <h4>Quick Starter</h4>
-                        <p>Completed first lesson</p>
-                      </div>
-                      <span class="achievement-date">1 week ago</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Career Readiness Score -->
-              <div class="dashboard-card career-score">
-                <div class="card-header">
-                  <h2><i class="fas fa-briefcase"></i> Career Readiness</h2>
-                </div>
-                <div class="card-content">
-                  <div class="score-circle">
-                    <svg viewBox="0 0 100 100">
-                      <circle class="score-bg" cx="50" cy="50" r="45"></circle>
-                      <circle class="score-fill" cx="50" cy="50" r="45" 
-                        stroke-dasharray="283" stroke-dashoffset="170"></circle>
-                    </svg>
-                    <div class="score-value">
-                      <span class="score-number">42</span>
-                      <span class="score-label">/ 100</span>
-                    </div>
-                  </div>
-                  <div class="score-breakdown">
-                    <div class="breakdown-item">
-                      <span class="breakdown-label">Technical Skills</span>
-                      <span class="breakdown-value">50%</span>
-                    </div>
-                    <div class="breakdown-item">
-                      <span class="breakdown-label">Projects</span>
-                      <span class="breakdown-value">35%</span>
-                    </div>
-                    <div class="breakdown-item">
-                      <span class="breakdown-label">Certifications</span>
-                      <span class="breakdown-value">40%</span>
-                    </div>
-                  </div>
-                  <button class="improve-score-btn">
-                    <i class="fas fa-chart-line"></i>
-                    <span>How to Improve</span>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Upcoming Deadlines -->
-              <div class="dashboard-card deadlines">
-                <div class="card-header">
-                  <h2><i class="fas fa-calendar-alt"></i> Upcoming</h2>
-                </div>
-                <div class="card-content">
-                  <div class="deadline-list">
-                    <div class="deadline-item urgent">
-                      <div class="deadline-date">
-                        <span class="day">15</span>
-                        <span class="month">Dec</span>
-                      </div>
-                      <div class="deadline-info">
-                        <h4>CSS Project Due</h4>
-                        <p>Portfolio website</p>
-                      </div>
-                      <span class="deadline-countdown">2 days</span>
-                    </div>
-                    <div class="deadline-item">
-                      <div class="deadline-date">
-                        <span class="day">20</span>
-                        <span class="month">Dec</span>
-                      </div>
-                      <div class="deadline-info">
-                        <h4>JavaScript Quiz</h4>
-                        <p>Module assessment</p>
-                      </div>
-                      <span class="deadline-countdown">7 days</span>
-                    </div>
-                    <div class="deadline-item">
-                      <div class="deadline-date">
-                        <span class="day">31</span>
-                        <span class="month">Dec</span>
-                      </div>
-                      <div class="deadline-info">
-                        <h4>Monthly Goal</h4>
-                        <p>Complete 3 modules</p>
-                      </div>
-                      <span class="deadline-countdown">18 days</span>
-                    </div>
-                  </div>
+                  <canvas id="skillRadarCanvas"></canvas>
                 </div>
               </div>
             </div>
           </div>
-
-          <!-- Platform Stats Section -->
-          <div class="platform-stats">
-            <h2 class="section-title">Platform Statistics</h2>
-            <div class="platform-stats-grid">
-              <div class="platform-stat-card">
-                <div class="stat-icon-large">
-                  <i class="fas fa-map-signs"></i>
-                </div>
-                <div class="stat-number" data-count="25">0</div>
-                <div class="stat-text">Roadmaps Available</div>
-              </div>
-              <div class="platform-stat-card">
-                <div class="stat-icon-large">
-                  <i class="fas fa-book"></i>
-                </div>
-                <div class="stat-number" data-count="150">0</div>
-                <div class="stat-text">Learning Resources</div>
-              </div>
-              <div class="platform-stat-card">
-                <div class="stat-icon-large">
-                  <i class="fas fa-users"></i>
-                </div>
-                <div class="stat-number" data-count="5000">0</div>
-                <div class="stat-text">Active Learners</div>
-              </div>
-              <div class="platform-stat-card">
-                <div class="stat-icon-large">
-                  <i class="fas fa-certificate"></i>
-                </div>
-                <div class="stat-number" data-count="1200">0</div>
-                <div class="stat-text">Certificates Issued</div>
-              </div>
-            </div>
-          </div>
-
         </section>
 
-        <!-- ============================================ -->
-        <!-- MY ROADMAPS SECTION -->
-        <!-- ============================================ -->
         <section class="dashboard-section" id="section-roadmaps">
-          <div class="section-header">
-            <div class="section-title-group">
-              <h1>My Roadmaps</h1>
-              <p>Track and manage your learning paths</p>
-            </div>
-            <button class="add-roadmap-btn" id="addRoadmapBtn">
-              <i class="fas fa-plus"></i>
-              <span>Add New Roadmap</span>
-            </button>
-          </div>
-
-          <!-- Roadmap Filters -->
-          <div class="roadmap-filters">
-            <div class="filter-tabs">
-              <button class="filter-tab active" data-filter="all">All (3)</button>
-              <button class="filter-tab" data-filter="in-progress">In Progress (2)</button>
-              <button class="filter-tab" data-filter="completed">Completed (1)</button>
-              <button class="filter-tab" data-filter="saved">Saved (5)</button>
-            </div>
-            <div class="filter-actions">
-              <div class="sort-dropdown">
-                <button class="sort-btn">
-                  <i class="fas fa-sort"></i>
-                  <span>Sort by: Recent</span>
-                </button>
-              </div>
-              <div class="view-toggle">
-                <button class="view-btn active" data-view="grid">
-                  <i class="fas fa-th-large"></i>
-                </button>
-                <button class="view-btn" data-view="list">
-                  <i class="fas fa-list"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- My Roadmaps Grid -->
-          <div class="my-roadmaps-grid" id="myRoadmapsGrid">
-            
-            <!-- Roadmap Card 1 -->
-            <div class="roadmap-card in-progress">
+          <div class="section-header"><h1>My Roadmaps</h1></div>
+          <div class="my-roadmaps-grid">
+            <div class="roadmap-card">
               <div class="roadmap-card-header">
-                <div class="roadmap-icon frontend">
-                  <i class="fas fa-code"></i>
-                </div>
-                <div class="roadmap-status in-progress">
-                  <i class="fas fa-spinner"></i>
-                  <span>In Progress</span>
-                </div>
-                <button class="roadmap-menu-btn">
-                  <i class="fas fa-ellipsis-v"></i>
-                </button>
+                <div class="roadmap-icon frontend"><i class="fas fa-code"></i></div>
+                <span class="roadmap-status in-progress">In Progress</span>
               </div>
               <div class="roadmap-card-body">
-                <h3>Frontend Web Development</h3>
-                <p>Master modern web technologies from HTML to React</p>
-                <div class="roadmap-tags">
-                  <span class="tag">HTML</span>
-                  <span class="tag">CSS</span>
-                  <span class="tag">JavaScript</span>
-                  <span class="tag">React</span>
-                </div>
-                <div class="roadmap-stats">
-                  <div class="roadmap-stat">
-                    <i class="fas fa-layer-group"></i>
-                    <span>8 Modules</span>
-                  </div>
-                  <div class="roadmap-stat">
-                    <i class="fas fa-clock"></i>
-                    <span>3-6 months</span>
-                  </div>
-                  <div class="roadmap-stat">
-                    <i class="fas fa-signal"></i>
-                    <span>Beginner</span>
-                  </div>
-                </div>
-              </div>
-              <div class="roadmap-card-footer">
-                <div class="progress-info">
-                  <div class="progress-bar-small">
-                    <div class="progress-fill-small" style="width: 45%"></div>
-                  </div>
-                  <span class="progress-text">45% Complete</span>
-                </div>
-                <button class="continue-roadmap-btn">
-                  Continue <i class="fas fa-arrow-right"></i>
-                </button>
+                <h3>Frontend Dev</h3>
+                <p>Learn to build modern websites.</p>
               </div>
             </div>
-
-            <!-- Roadmap Card 2 -->
-            <div class="roadmap-card in-progress">
-              <div class="roadmap-card-header">
-                <div class="roadmap-icon backend">
-                  <i class="fas fa-server"></i>
-                </div>
-                <div class="roadmap-status in-progress">
-                  <i class="fas fa-spinner"></i>
-                  <span>In Progress</span>
-                </div>
-                <button class="roadmap-menu-btn">
-                  <i class="fas fa-ellipsis-v"></i>
-                </button>
-              </div>
-              <div class="roadmap-card-body">
-                <h3>Backend Development</h3>
-                <p>Learn server-side programming with Node.js and databases</p>
-                <div class="roadmap-tags">
-                  <span class="tag">Node.js</span>
-                  <span class="tag">Express</span>
-                  <span class="tag">MongoDB</span>
-                  <span class="tag">REST API</span>
-                </div>
-                <div class="roadmap-stats">
-                  <div class="roadmap-stat">
-                    <i class="fas fa-layer-group"></i>
-                    <span>10 Modules</span>
-                  </div>
-                  <div class="roadmap-stat">
-                    <i class="fas fa-clock"></i>
-                    <span>4-8 months</span>
-                  </div>
-                  <div class="roadmap-stat">
-                    <i class="fas fa-signal"></i>
-                    <span>Intermediate</span>
-                  </div>
-                </div>
-              </div>
-              <div class="roadmap-card-footer">
-                <div class="progress-info">
-                  <div class="progress-bar-small">
-                    <div class="progress-fill-small" style="width: 20%"></div>
-                  </div>
-                  <span class="progress-text">20% Complete</span>
-                </div>
-                <button class="continue-roadmap-btn">
-                  Continue <i class="fas fa-arrow-right"></i>
-                </button>
-              </div>
             </div>
-
-            <!-- Roadmap Card 3 - Completed -->
-            <div class="roadmap-card completed">
-              <div class="roadmap-card-header">
-                <div class="roadmap-icon basics">
-                  <i class="fas fa-laptop-code"></i>
-                </div>
-                <div class="roadmap-status completed">
-                  <i class="fas fa-check-circle"></i>
-                  <span>Completed</span>
-                </div>
-                <button class="roadmap-menu-btn">
-                  <i class="fas fa-ellipsis-v"></i>
-                </button>
-              </div>
-              <div class="roadmap-card-body">
-                <h3>Programming Fundamentals</h3>
-                <p>Core concepts of programming and computer science basics</p>
-                <div class="roadmap-tags">
-                  <span class="tag">Algorithms</span>
-                  <span class="tag">Data Structures</span>
-                  <span class="tag">Logic</span>
-                </div>
-                <div class="roadmap-stats">
-                  <div class="roadmap-stat">
-                    <i class="fas fa-layer-group"></i>
-                    <span>5 Modules</span>
-                  </div>
-                  <div class="roadmap-stat">
-                    <i class="fas fa-clock"></i>
-                    <span>1-2 months</span>
-                  </div>
-                  <div class="roadmap-stat">
-                    <i class="fas fa-signal"></i>
-                    <span>Beginner</span>
-                  </div>
-                </div>
-              </div>
-              <div class="roadmap-card-footer">
-                <div class="progress-info">
-                  <div class="progress-bar-small">
-                    <div class="progress-fill-small completed" style="width: 100%"></div>
-                  </div>
-                  <span class="progress-text">100% Complete</span>
-                </div>
-                <button class="view-certificate-btn">
-                  <i class="fas fa-certificate"></i> View Certificate
-                </button>
-              </div>
-            </div>
-
-          </div>
         </section>
 
-        <!-- ============================================ -->
-        <!-- EXPLORE ROADMAPS SECTION -->
-        <!-- ============================================ -->
-        <section class="dashboard-section" id="section-explore">
-          <div class="section-header">
-            <div class="section-title-group">
-              <h1>Explore Roadmaps</h1>
-              <p>Discover structured learning paths for your career goals</p>
-            </div>
-          </div>
-
-          <!-- Category Filters -->
-          <div class="category-filters">
-            <button class="category-btn active" data-category="all">
-              <i class="fas fa-globe"></i>
-              <span>All</span>
-            </button>
-            <button class="category-btn" data-category="web">
-              <i class="fas fa-code"></i>
-              <span>Web Development</span>
-            </button>
-            <button class="category-btn" data-category="mobile">
-              <i class="fas fa-mobile-alt"></i>
-              <span>Mobile Development</span>
-            </button>
-            <button class="category-btn" data-category="data">
-              <i class="fas fa-database"></i>
-              <span>Data Science</span>
-            </button>
-            <button class="category-btn" data-category="devops">
-              <i class="fas fa-cloud"></i>
-              <span>DevOps</span>
-            </button>
-            <button class="category-btn" data-category="ai">
-              <i class="fas fa-brain"></i>
-              <span>AI/ML</span>
-            </button>
-          </div>
-
-          <!-- Level Filters -->
-          <div class="level-filters">
-            <span class="filter-label">Skill Level:</span>
-            <div class="level-pills">
-              <button class="level-pill active" data-level="all">All Levels</button>
-              <button class="level-pill" data-level="beginner">
-                <span class="level-dot beginner"></span>
-                Beginner
-              </button>
-              <button class="level-pill" data-level="intermediate">
-                <span class="level-dot intermediate"></span>
-                Intermediate
-              </button>
-              <button class="level-pill" data-level="advanced">
-                <span class="level-dot advanced"></span>
-                Advanced
-              </button>
-            </div>
-          </div>
-
-          <!-- Featured Roadmaps -->
-          <div class="featured-section">
-            <h2 class="subsection-title">
-              <i class="fas fa-star"></i>
-              Featured Roadmaps
-            </h2>
-            <div class="featured-roadmaps-slider" id="featuredSlider">
-              <!-- Featured roadmap cards will be loaded here -->
-            </div>
-          </div>
-
-          <!-- All Roadmaps Grid -->
-          <div class="explore-roadmaps-grid" id="exploreRoadmapsGrid">
-            <!-- Roadmap cards will be loaded dynamically -->
-          </div>
-
-          <!-- Compare Roadmaps Modal -->
-          <div class="compare-section">
-            <button class="compare-btn" id="compareBtn">
-              <i class="fas fa-columns"></i>
-              <span>Compare Roadmaps</span>
-            </button>
-          </div>
-        </section>
-
-        <!-- ============================================ -->
-        <!-- PROGRESS TRACKER SECTION -->
-        <!-- ============================================ -->
-        <section class="dashboard-section" id="section-progress">
-          <div class="section-header">
-            <div class="section-title-group">
-              <h1>Progress Tracker</h1>
-              <p>Detailed insights into your learning journey</p>
-            </div>
-            <button class="download-report-btn" id="downloadReportBtn">
-              <i class="fas fa-download"></i>
-              <span>Download Report (PDF)</span>
-            </button>
-          </div>
-
-          <!-- Progress Overview Cards -->
-          <div class="progress-overview">
-            <div class="progress-overview-card total-time">
-              <div class="overview-icon">
-                <i class="fas fa-hourglass-half"></i>
-              </div>
-              <div class="overview-content">
-                <h3>Total Learning Time</h3>
-                <div class="overview-value">
-                  <span class="value-number">47</span>
-                  <span class="value-unit">hours</span>
-                </div>
-                <p class="overview-comparison">+12 hours from last month</p>
-              </div>
-            </div>
-
-            <div class="progress-overview-card completion-rate">
-              <div class="overview-icon">
-                <i class="fas fa-percentage"></i>
-              </div>
-              <div class="overview-content">
-                <h3>Overall Completion</h3>
-                <div class="overview-value">
-                  <span class="value-number">38</span>
-                  <span class="value-unit">%</span>
-                </div>
-                <p class="overview-comparison">Across all roadmaps</p>
-              </div>
-            </div>
-
-            <div class="progress-overview-card learning-streak">
-              <div class="overview-icon">
-                <i class="fas fa-fire-alt"></i>
-              </div>
-              <div class="overview-content">
-                <h3>Current Streak</h3>
-                <div class="overview-value">
-                  <span class="value-number">7</span>
-                  <span class="value-unit">days</span>
-                </div>
-                <p class="overview-comparison">Best: 14 days</p>
-              </div>
-            </div>
-
-            <div class="progress-overview-card xp-earned">
-              <div class="overview-icon">
-                <i class="fas fa-bolt"></i>
-              </div>
-              <div class="overview-content">
-                <h3>XP Earned</h3>
-                <div class="overview-value">
-                  <span class="value-number">2,450</span>
-                  <span class="value-unit">XP</span>
-                </div>
-                <p class="overview-comparison">Level 12 • 550 XP to Level 13</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Detailed Progress Per Roadmap -->
-          <div class="detailed-progress">
-            <h2 class="subsection-title">Progress by Roadmap</h2>
-            
-            <div class="progress-roadmap-list">
-              <!-- Frontend Development Progress -->
-              <div class="progress-roadmap-item expanded">
-                <div class="progress-roadmap-header">
-                  <div class="roadmap-identity">
-                    <div class="roadmap-icon-small frontend">
-                      <i class="fas fa-code"></i>
-                    </div>
-                    <div class="roadmap-title">
-                      <h3>Frontend Web Development</h3>
-                      <span class="module-count">8 modules • 45% complete</span>
-                    </div>
-                  </div>
-                  <div class="progress-percentage-ring">
-                    <svg viewBox="0 0 36 36">
-                      <path class="ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                      <path class="ring-fill" stroke-dasharray="45, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                    </svg>
-                    <span class="ring-text">45%</span>
-                  </div>
-                  <button class="expand-btn">
-                    <i class="fas fa-chevron-down"></i>
-                  </button>
-                </div>
-                
-                <div class="progress-roadmap-body">
-                  <div class="modules-timeline">
-                    <div class="module-step completed">
-                      <div class="step-marker"><i class="fas fa-check"></i></div>
-                      <div class="step-content">
-                        <h4>HTML Fundamentals</h4>
-                        <p>Completed • 100%</p>
-                      </div>
-                      <span class="step-time">8 hours</span>
-                    </div>
-                    <div class="module-step completed">
-                      <div class="step-marker"><i class="fas fa-check"></i></div>
-                      <div class="step-content">
-                        <h4>CSS Basics</h4>
-                        <p>Completed • 100%</p>
-                      </div>
-                      <span class="step-time">12 hours</span>
-                    </div>
-                    <div class="module-step completed">
-                      <div class="step-marker"><i class="fas fa-check"></i></div>
-                      <div class="step-content">
-                        <h4>Responsive Design</h4>
-                        <p>Completed • 100%</p>
-                      </div>
-                      <span class="step-time">6 hours</span>
-                    </div>
-                    <div class="module-step current">
-                      <div class="step-marker"><i class="fas fa-play"></i></div>
-                      <div class="step-content">
-                        <h4>CSS Flexbox & Grid</h4>
-                        <p>In Progress • 60%</p>
-                        <div class="mini-progress-bar">
-                          <div class="mini-progress-fill" style="width: 60%"></div>
-                        </div>
-                      </div>
-                      <span class="step-time">4/8 hours</span>
-                    </div>
-                    <div class="module-step locked">
-                      <div class="step-marker"><i class="fas fa-lock"></i></div>
-                      <div class="step-content">
-                        <h4>JavaScript Basics</h4>
-                        <p>Locked</p>
-                      </div>
-                      <span class="step-time">~15 hours</span>
-                    </div>
-                    <div class="module-step locked">
-                      <div class="step-marker"><i class="fas fa-lock"></i></div>
-                      <div class="step-content">
-                        <h4>DOM Manipulation</h4>
-                        <p>Locked</p>
-                      </div>
-                      <span class="step-time">~10 hours</span>
-                    </div>
-                    <div class="module-step locked">
-                      <div class="step-marker"><i class="fas fa-lock"></i></div>
-                      <div class="step-content">
-                        <h4>React Fundamentals</h4>
-                        <p>Locked</p>
-                      </div>
-                      <span class="step-time">~20 hours</span>
-                    </div>
-                    <div class="module-step locked">
-                      <div class="step-marker"><i class="fas fa-lock"></i></div>
-                      <div class="step-content">
-                        <h4>Final Project</h4>
-                        <p>Locked</p>
-                      </div>
-                      <span class="step-time">~15 hours</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Backend Development Progress -->
-              <div class="progress-roadmap-item">
-                <div class="progress-roadmap-header">
-                  <div class="roadmap-identity">
-                    <div class="roadmap-icon-small backend">
-                      <i class="fas fa-server"></i>
-                    </div>
-                    <div class="roadmap-title">
-                      <h3>Backend Development</h3>
-                      <span class="module-count">10 modules • 20% complete</span>
-                    </div>
-                  </div>
-                  <div class="progress-percentage-ring">
-                    <svg viewBox="0 0 36 36">
-                      <path class="ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                      <path class="ring-fill" stroke-dasharray="20, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                    </svg>
-                    <span class="ring-text">20%</span>
-                  </div>
-                  <button class="expand-btn">
-                    <i class="fas fa-chevron-down"></i>
-                  </button>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          <!-- Learning Calendar -->
-          <div class="learning-calendar">
-            <div class="calendar-header">
-              <h2 class="subsection-title">
-                <i class="fas fa-calendar"></i>
-                Learning Calendar
-              </h2>
-              <div class="calendar-nav">
-                <button class="cal-nav-btn" id="prevMonth">
-                  <i class="fas fa-chevron-left"></i>
-                </button>
-                <span class="current-month" id="currentMonth">December 2024</span>
-                <button class="cal-nav-btn" id="nextMonth">
-                  <i class="fas fa-chevron-right"></i>
-                </button>
-              </div>
-            </div>
-            <div class="calendar-grid" id="calendarGrid">
-              <!-- Calendar will be generated by JavaScript -->
-            </div>
-          </div>
-
-        </section>
-
-        <!-- ============================================ -->
-        <!-- RESOURCES SECTION -->
-        <!-- ============================================ -->
-        <section class="dashboard-section" id="section-resources">
-          <div class="section-header">
-            <div class="section-title-group">
-              <h1>Learning Resources</h1>
-              <p>Curated resources for effective learning</p>
-            </div>
-          </div>
-
-          <!-- Resource Categories -->
-          <div class="resource-categories">
-            <div class="resource-category-card">
-              <div class="category-icon video">
-                <i class="fas fa-video"></i>
-              </div>
-              <h3>Video Tutorials</h3>
-              <p>45 videos</p>
-            </div>
-            <div class="resource-category-card">
-              <div class="category-icon article">
-                <i class="fas fa-file-alt"></i>
-              </div>
-              <h3>Articles</h3>
-              <p>32 articles</p>
-            </div>
-            <div class="resource-category-card">
-              <div class="category-icon course">
-                <i class="fas fa-graduation-cap"></i>
-              </div>
-              <h3>Courses</h3>
-              <p>18 courses</p>
-            </div>
-            <div class="resource-category-card">
-              <div class="category-icon project">
-                <i class="fas fa-project-diagram"></i>
-              </div>
-              <h3>Projects</h3>
-              <p>24 projects</p>
-            </div>
-            <div class="resource-category-card">
-              <div class="category-icon interview">
-                <i class="fas fa-user-tie"></i>
-              </div>
-              <h3>Interview Prep</h3>
-              <p>15 guides</p>
-            </div>
-            <div class="resource-category-card">
-              <div class="category-icon template">
-                <i class="fas fa-file-code"></i>
-              </div>
-              <h3>Templates</h3>
-              <p>20 templates</p>
-            </div>
-          </div>
-
-          <!-- Featured Resources -->
-          <div class="featured-resources">
-            <h2 class="subsection-title">
-              <i class="fas fa-star"></i>
-              Recommended for You
-            </h2>
-            <div class="resources-grid">
-              <div class="resource-card">
-                <div class="resource-thumbnail video">
-                  <i class="fas fa-play-circle"></i>
-                  <span class="resource-duration">45 min</span>
-                </div>
-                <div class="resource-content">
-                  <div class="resource-type">
-                    <span class="type-badge video">Video</span>
-                    <span class="best-badge"><i class="fas fa-star"></i> Best</span>
-                  </div>
-                  <h3>CSS Grid Complete Guide</h3>
-                  <p>Master CSS Grid layout with this comprehensive tutorial</p>
-                  <div class="resource-meta">
-                    <span><i class="fas fa-clock"></i> 45 min</span>
-                    <span><i class="fas fa-signal"></i> Intermediate</span>
-                  </div>
-                </div>
-                <button class="resource-action-btn">
-                  <i class="fas fa-external-link-alt"></i>
-                </button>
-              </div>
-              <!-- More resource cards... -->
-            </div>
-          </div>
-        </section>
-
-        <!-- ============================================ -->
-        <!-- CERTIFICATES SECTION -->
-        <!-- ============================================ -->
-        <section class="dashboard-section" id="section-certificates">
-          <div class="section-header">
-            <div class="section-title-group">
-              <h1>Certificates & Badges</h1>
-              <p>Your achievements and credentials</p>
-            </div>
-          </div>
-
-          <!-- Badges Collection -->
-          <div class="badges-section">
-            <h2 class="subsection-title">
-              <i class="fas fa-medal"></i>
-              Badges Earned (5)
-            </h2>
-            <div class="badges-grid">
-              <div class="badge-card earned">
-                <div class="badge-icon gold">
-                  <i class="fas fa-fire"></i>
-                </div>
-                <h4>Week Warrior</h4>
-                <p>7-day streak</p>
-                <span class="badge-date">Earned today</span>
-              </div>
-              <div class="badge-card earned">
-                <div class="badge-icon purple">
-                  <i class="fas fa-code"></i>
-                </div>
-                <h4>HTML Master</h4>
-                <p>Completed HTML</p>
-                <span class="badge-date">Dec 10, 2024</span>
-              </div>
-              <div class="badge-card earned">
-                <div class="badge-icon blue">
-                  <i class="fas fa-rocket"></i>
-                </div>
-                <h4>Quick Starter</h4>
-                <p>First lesson done</p>
-                <span class="badge-date">Dec 1, 2024</span>
-              </div>
-              <div class="badge-card earned">
-                <div class="badge-icon green">
-                  <i class="fas fa-check-double"></i>
-                </div>
-                <h4>Goal Getter</h4>
-                <p>5 goals completed</p>
-                <span class="badge-date">Dec 8, 2024</span>
-              </div>
-              <div class="badge-card earned">
-                <div class="badge-icon orange">
-                  <i class="fas fa-lightbulb"></i>
-                </div>
-                <h4>CSS Stylist</h4>
-                <p>CSS basics done</p>
-                <span class="badge-date">Dec 5, 2024</span>
-              </div>
-              <div class="badge-card locked">
-                <div class="badge-icon locked">
-                  <i class="fas fa-lock"></i>
-                </div>
-                <h4>JavaScript Ninja</h4>
-                <p>Complete JS module</p>
-                <span class="badge-progress">0% progress</span>
-              </div>
-              <div class="badge-card locked">
-                <div class="badge-icon locked">
-                  <i class="fas fa-lock"></i>
-                </div>
-                <h4>React Rockstar</h4>
-                <p>Master React basics</p>
-                <span class="badge-progress">0% progress</span>
-              </div>
-              <div class="badge-card locked">
-                <div class="badge-icon locked">
-                  <i class="fas fa-lock"></i>
-                </div>
-                <h4>Full Stack Hero</h4>
-                <p>Complete 2 roadmaps</p>
-                <span class="badge-progress">50% progress</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Certificates -->
-          <div class="certificates-section">
-            <h2 class="subsection-title">
-              <i class="fas fa-certificate"></i>
-              Certificates (1)
-            </h2>
-            <div class="certificates-grid">
-              <div class="certificate-card">
-                <div class="certificate-preview">
-                  <div class="certificate-badge">
-                    <i class="fas fa-award"></i>
-                  </div>
-                  <div class="certificate-watermark">ROADMAP-HUB</div>
-                </div>
-                <div class="certificate-info">
-                  <h3>Programming Fundamentals</h3>
-                  <p>Certificate of Completion</p>
-                  <span class="certificate-id">ID: RMH-2024-001234</span>
-                  <span class="certificate-date">Issued: Dec 1, 2024</span>
-                </div>
-                <div class="certificate-actions">
-                  <button class="cert-action-btn view">
-                    <i class="fas fa-eye"></i>
-                    View
-                  </button>
-                  <button class="cert-action-btn download">
-                    <i class="fas fa-download"></i>
-                    Download
-                  </button>
-                  <button class="cert-action-btn share">
-                    <i class="fab fa-linkedin"></i>
-                    Share
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ============================================ -->
-        <!-- COMMUNITY SECTION -->
-        <!-- ============================================ -->
-        <section class="dashboard-section" id="section-community">
-          <div class="section-header">
-            <div class="section-title-group">
-              <h1>Community</h1>
-              <p>Connect, learn, and grow together</p>
-            </div>
-          </div>
-
-          <!-- Community Stats -->
-          <div class="community-stats">
-            <div class="community-stat">
-              <i class="fas fa-users"></i>
-              <span class="stat-value">5,234</span>
-              <span class="stat-label">Members</span>
-            </div>
-            <div class="community-stat">
-              <i class="fas fa-comments"></i>
-              <span class="stat-value">1,892</span>
-              <span class="stat-label">Discussions</span>
-            </div>
-            <div class="community-stat">
-              <i class="fas fa-project-diagram"></i>
-              <span class="stat-value">324</span>
-              <span class="stat-label">Projects Shared</span>
-            </div>
-            <div class="community-stat">
-              <i class="fas fa-hand-holding-heart"></i>
-              <span class="stat-value">156</span>
-              <span class="stat-label">Mentors</span>
-            </div>
-          </div>
-
-          <!-- Discussion Forums -->
-          <div class="discussion-section">
-            <div class="discussion-header">
-              <h2 class="subsection-title">
-                <i class="fas fa-comments"></i>
-                Recent Discussions
-              </h2>
-              <button class="new-discussion-btn">
-                <i class="fas fa-plus"></i>
-                <span>New Discussion</span>
-              </button>
-            </div>
-            <div class="discussions-list">
-              <div class="discussion-card">
-                <div class="discussion-votes">
-                  <button class="vote-btn up"><i class="fas fa-chevron-up"></i></button>
-                  <span class="vote-count">24</span>
-                  <button class="vote-btn down"><i class="fas fa-chevron-down"></i></button>
-                </div>
-                <div class="discussion-content">
-                  <div class="discussion-tags">
-                    <span class="tag css">CSS</span>
-                    <span class="tag question">Question</span>
-                  </div>
-                  <h3>How to center a div? (Yes, really!)</h3>
-                  <p>I know it's a meme but I'm genuinely confused about all the different methods...</p>
-                  <div class="discussion-meta">
-                    <div class="discussion-author">
-                      <img src="https://ui-avatars.com/api/?name=John+Doe&background=4cc9f0&color=fff" alt="Author">
-                      <span>John Doe</span>
-                    </div>
-                    <span class="discussion-time">2 hours ago</span>
-                    <span class="discussion-replies">
-                      <i class="fas fa-comment"></i> 12 replies
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <!-- More discussions... -->
-            </div>
-          </div>
-
-          <!-- Project Showcase -->
-          <div class="showcase-section">
-            <h2 class="subsection-title">
-              <i class="fas fa-star"></i>
-              Project Showcase
-            </h2>
-            <div class="showcase-grid">
-              <div class="showcase-card">
-                <div class="showcase-image">
-                  <img src="https://via.placeholder.com/400x250/4cc9f0/ffffff?text=Portfolio+Website" alt="Project">
-                  <div class="showcase-overlay">
-                    <button class="view-project-btn">View Project</button>
-                  </div>
-                </div>
-                <div class="showcase-content">
-                  <h3>Personal Portfolio</h3>
-                  <p>by Sarah Johnson</p>
-                  <div class="showcase-stats">
-                    <span><i class="fas fa-heart"></i> 156</span>
-                    <span><i class="fas fa-eye"></i> 1.2k</span>
-                    <span><i class="fas fa-comment"></i> 24</span>
-                  </div>
-                </div>
-              </div>
-              <!-- More showcase cards... -->
-            </div>
-          </div>
-        </section>
-
-        <!-- ============================================ -->
-        <!-- SETTINGS SECTION -->
-        <!-- ============================================ -->
         <section class="dashboard-section" id="section-settings">
-          <div class="section-header">
-            <div class="section-title-group">
-              <h1>Settings</h1>
-              <p>Manage your account and preferences</p>
-            </div>
-          </div>
-
+          <div class="section-header"><h1>Settings</h1></div>
           <div class="settings-container">
-            <!-- Profile Settings -->
             <div class="settings-card">
-              <div class="settings-card-header">
-                <i class="fas fa-user"></i>
-                <h3>Profile Settings</h3>
-              </div>
+              <div class="settings-card-header"><h3>Profile</h3></div>
               <div class="settings-card-body">
-                <div class="profile-avatar-section">
-                  <img src="" alt="Avatar" class="settings-avatar" id="settingsAvatar">
-                  <button class="change-avatar-btn">Change Photo</button>
+                <div class="form-group">
+                  <label>Full Name</label>
+                  <input type="text" placeholder="Your Name">
                 </div>
-                <div class="settings-form">
-                  <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="settingsName" placeholder="Your name">
-                  </div>
-                  <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="settingsEmail" placeholder="Your email" disabled>
-                  </div>
-                  <div class="form-group">
-                    <label>Phone</label>
-                    <input type="tel" id="settingsPhone" placeholder="Your phone">
-                  </div>
-                  <div class="form-group">
-                    <label>Bio</label>
-                    <textarea id="settingsBio" placeholder="Tell us about yourself"></textarea>
-                  </div>
-                  <button class="save-settings-btn">Save Changes</button>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" placeholder="email@example.com">
                 </div>
-              </div>
-            </div>
-
-            <!-- Notification Settings -->
-            <div class="settings-card">
-              <div class="settings-card-header">
-                <i class="fas fa-bell"></i>
-                <h3>Notification Settings</h3>
-              </div>
-              <div class="settings-card-body">
-                <div class="toggle-setting">
-                  <div class="setting-info">
-                    <h4>Email Notifications</h4>
-                    <p>Receive updates via email</p>
-                  </div>
-                  <label class="toggle-switch">
-                    <input type="checkbox" checked>
-                    <span class="toggle-slider"></span>
-                  </label>
-                </div>
-                <div class="toggle-setting">
-                  <div class="setting-info">
-                    <h4>Push Notifications</h4>
-                    <p>Browser push notifications</p>
-                  </div>
-                  <label class="toggle-switch">
-                    <input type="checkbox" checked>
-                    <span class="toggle-slider"></span>
-                  </label>
-                </div>
-                <div class="toggle-setting">
-                  <div class="setting-info">
-                    <h4>Streak Reminders</h4>
-                    <p>Daily learning reminders</p>
-                  </div>
-                  <label class="toggle-switch">
-                    <input type="checkbox" checked>
-                    <span class="toggle-slider"></span>
-                  </label>
-                </div>
-                <div class="toggle-setting">
-                  <div class="setting-info">
-                    <h4>Weekly Progress Report</h4>
-                    <p>Summary of your week</p>
-                  </div>
-                  <label class="toggle-switch">
-                    <input type="checkbox">
-                    <span class="toggle-slider"></span>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <!-- Privacy Settings -->
-            <div class="settings-card">
-              <div class="settings-card-header">
-                <i class="fas fa-lock"></i>
-                <h3>Privacy & Security</h3>
-              </div>
-              <div class="settings-card-body">
-                <div class="toggle-setting">
-                  <div class="setting-info">
-                    <h4>Public Profile</h4>
-                    <p>Others can view your profile</p>
-                  </div>
-                  <label class="toggle-switch">
-                    <input type="checkbox" checked>
-                    <span class="toggle-slider"></span>
-                  </label>
-                </div>
-                <div class="toggle-setting">
-                  <div class="setting-info">
-                    <h4>Show Progress</h4>
-                    <p>Display progress on leaderboard</p>
-                  </div>
-                  <label class="toggle-switch">
-                    <input type="checkbox" checked>
-                    <span class="toggle-slider"></span>
-                  </label>
-                </div>
-                <div class="security-actions">
-                  <button class="security-btn">
-                    <i class="fas fa-key"></i>
-                    Change Password
-                  </button>
-                  <button class="security-btn danger">
-                    <i class="fas fa-trash"></i>
-                    Delete Account
-                  </button>
-                </div>
+                <button class="upgrade-btn">Save Changes</button>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- ============================================ -->
-        <!-- HELP SECTION -->
-        <!-- ============================================ -->
-        <section class="dashboard-section" id="section-help">
-          <div class="section-header">
-            <div class="section-title-group">
-              <h1>Help & Support</h1>
-              <p>Find answers and get help</p>
-            </div>
-          </div>
-
-          <!-- Quick Help Cards -->
-          <div class="help-cards">
-            <div class="help-card">
-              <div class="help-icon">
-                <i class="fas fa-book"></i>
-              </div>
-              <h3>Documentation</h3>
-              <p>Guides and tutorials</p>
-              <a href="#" class="help-link">Browse Docs <i class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="help-card">
-              <div class="help-icon">
-                <i class="fas fa-question-circle"></i>
-              </div>
-              <h3>FAQ</h3>
-              <p>Common questions</p>
-              <a href="#" class="help-link">View FAQ <i class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="help-card">
-              <div class="help-icon">
-                <i class="fas fa-headset"></i>
-              </div>
-              <h3>Contact Support</h3>
-              <p>Get personalized help</p>
-              <a href="#" class="help-link">Contact Us <i class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="help-card">
-              <div class="help-icon">
-                <i class="fas fa-comments"></i>
-              </div>
-              <h3>Community</h3>
-              <p>Ask the community</p>
-              <a href="#" class="help-link">Join Discussion <i class="fas fa-arrow-right"></i></a>
-            </div>
-          </div>
-
-          <!-- FAQ Section -->
-          <div class="faq-section">
-            <h2 class="subsection-title">Frequently Asked Questions</h2>
-            <div class="faq-list">
-              <div class="faq-item">
-                <button class="faq-question">
-                  <span>How do I start a roadmap?</span>
-                  <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="faq-answer">
-                  <p>Navigate to the "Explore" section, find a roadmap that matches your goals, and click "Start Roadmap". You'll be guided through each step of the learning path.</p>
-                </div>
-              </div>
-              <div class="faq-item">
-                <button class="faq-question">
-                  <span>How are certificates issued?</span>
-                  <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="faq-answer">
-                  <p>Certificates are automatically issued when you complete 100% of a roadmap. Each certificate has a unique ID that can be verified and shared on LinkedIn.</p>
-                </div>
-              </div>
-              <div class="faq-item">
-                <button class="faq-question">
-                  <span>Can I track multiple roadmaps?</span>
-                  <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="faq-answer">
-                  <p>Yes! You can enroll in multiple roadmaps simultaneously. Your progress is tracked separately for each roadmap, and you can switch between them anytime.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <section class="dashboard-section" id="section-explore"><h1>Explore Roadmaps (Content Placeholder)</h1></section>
+        <section class="dashboard-section" id="section-progress"><h1>Progress (Content Placeholder)</h1></section>
+        <section class="dashboard-section" id="section-resources"><h1>Resources (Content Placeholder)</h1></section>
+        <section class="dashboard-section" id="section-certificates"><h1>Certificates (Content Placeholder)</h1></section>
+        <section class="dashboard-section" id="section-community"><h1>Community (Content Placeholder)</h1></section>
+        <section class="dashboard-section" id="section-help"><h1>Help (Content Placeholder)</h1></section>
 
       </div>
-
-      <!-- Footer -->
-      <footer class="dashboard-footer">
-        <div class="footer-content">
-          <p>&copy; 2024 RoadMap-HUB. Built for students, by students.</p>
-          <div class="footer-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">About Us</a>
-          </div>
-        </div>
-      </footer>
-
     </main>
   </div>
 
-  <!-- Toast Notification -->
-  <div class="toast" id="toast">
-    <div class="toast-icon"><i class="fas fa-check-circle"></i></div>
-    <div class="toast-content">
-      <span class="toast-title">Success!</span>
-      <span class="toast-message">Action completed.</span>
-    </div>
-    <div class="toast-progress"></div>
-    <button class="toast-close" id="toastClose"><i class="fas fa-times"></i></button>
-  </div>
+  <script>
+    // ==========================================
+    // JAVASCRIPT LOGIC
+    // ==========================================
 
-  <!-- Celebration Modal -->
-  <div class="celebration-modal" id="celebrationModal">
-    <div class="celebration-content">
-      <div class="confetti-container" id="confetti"></div>
-      <div class="celebration-icon">
-        <i class="fas fa-trophy"></i>
-      </div>
-      <h2>Congratulations! 🎉</h2>
-      <p id="celebrationMessage">You've earned a new badge!</p>
-      <button class="celebration-btn" id="celebrationClose">Awesome!</button>
-    </div>
-  </div>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // 1. Hide Page Loader
+      setTimeout(() => {
+        document.getElementById('pageLoader').classList.add('hidden');
+      }, 1000);
 
-  <script type="module" src="dashboard.js"></script>
+      // 2. Mobile Sidebar Toggle
+      const sidebar = document.getElementById('sidebar');
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const sidebarToggle = document.getElementById('sidebarToggle');
+      const mainContent = document.getElementById('mainContent');
+
+      // Toggle for mobile
+      mobileMenuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        sidebar.classList.toggle('open');
+      });
+
+      // Close sidebar when clicking outside on mobile
+      document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 992 && 
+            sidebar.classList.contains('open') && 
+            !sidebar.contains(e.target) && 
+            !mobileMenuBtn.contains(e.target)) {
+          sidebar.classList.remove('open');
+        }
+      });
+
+      // Desktop Collapse Toggle
+      sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('collapsed');
+      });
+
+      // 3. Section Switching (SPA Feel)
+      window.switchSection = function(sectionId) {
+        // Remove active class from all sections
+        document.querySelectorAll('.dashboard-section').forEach(sec => {
+          sec.classList.remove('active');
+        });
+        
+        // Add active class to target
+        const target = document.getElementById(`section-${sectionId}`);
+        if(target) target.classList.add('active');
+
+        // Update Navigation Styling
+        document.querySelectorAll('.nav-item').forEach(item => {
+          item.classList.remove('active');
+        });
+        // Find the nav item that called this (approximate)
+        event.currentTarget.classList.add('active');
+
+        // Close sidebar on mobile after selection
+        if (window.innerWidth <= 992) {
+          sidebar.classList.remove('open');
+        }
+      };
+
+      // 4. Initialize Radar Chart
+      const ctx = document.getElementById('skillRadarCanvas').getContext('2d');
+      new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: ['HTML', 'CSS', 'JS', 'React', 'Node', 'Design'],
+          datasets: [{
+            label: 'Skill Level',
+            data: [90, 80, 70, 50, 40, 65],
+            fill: true,
+            backgroundColor: 'rgba(76, 201, 240, 0.2)',
+            borderColor: '#4cc9f0',
+            pointBackgroundColor: '#fff',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: '#4cc9f0'
+          }]
+        },
+        options: {
+          scales: {
+            r: {
+              angleLines: { color: 'rgba(255,255,255,0.1)' },
+              grid: { color: 'rgba(255,255,255,0.1)' },
+              pointLabels: { color: '#9ca3af' },
+              ticks: { display: false }
+            }
+          },
+          plugins: {
+            legend: { display: false }
+          }
+        }
+      });
+
+      // 5. Generate Heatmap Cells (Visual only)
+      const heatmapContainer = document.querySelector('.activity-heatmap');
+      for(let i=0; i<50; i++) {
+        const div = document.createElement('div');
+        div.style.width = '12px';
+        div.style.height = '12px';
+        div.style.borderRadius = '2px';
+        // Random coloring
+        const opacity = Math.random() > 0.5 ? Math.random() * 0.8 + 0.2 : 0.1;
+        div.style.backgroundColor = `rgba(76, 201, 240, ${opacity})`;
+        heatmapContainer.appendChild(div);
+      }
+    });
+  </script>
 </body>
 </html>
-<body>
-  
