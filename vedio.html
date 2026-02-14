@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ========== RESET & BASE ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            background: #0a0a0f;
+            position: relative;
+        }
+
+        /* ========== FIXED TOP-LEFT BACK BUTTON ========== */
+        .fixed-back-btn {
+            position: fixed;
+            top: 24px;
+            left: 24px;
+            z-index: 100;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: rgba(15, 15, 25, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: fixedBtnFadeIn 0.6s ease-out 0.3s forwards;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .fixed-back-btn:hover {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: #10b981;
+            transform: translateX(0);
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.15);
+        }
+
+        .fixed-back-btn:active {
+            transform: scale(0.97);
+        }
+
+        .fixed-back-btn svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .fixed-back-btn:hover svg {
+            transform: translateX(-4px);
+        }
+
+        .fixed-back-btn .kbd-hint {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.35);
+            margin-left: 6px;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes fixedBtnFadeIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ========== MESH GRADIENT BACKGROUND ========== */
+        .bg-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse at 15% 20%, rgba(16, 185, 129, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 85% 25%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(14, 165, 233, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 20% 70%, rgba(168, 85, 247, 0.06) 0%, transparent 40%);
+            animation: meshShift 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes meshShift {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(25deg); }
+        }
+
+        /* ========== GRID PATTERN ========== */
+        .grid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        /* ========== AURORA WAVES ========== */
+        .aurora {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .aurora-wave {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            mix-blend-mode: screen;
+            filter: blur(100px);
+            opacity: 0.3;
+        }
+
+        .aurora-wave-1 {
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 60%);
+            top: -20%;
+            left: -10%;
+            animation: auroraMove1 15s ease-in-out infinite;
+        }
+
+        .aurora-wave-2 {
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, transparent 60%);
+            top: 10%;
+            right: -20%;
+            animation: auroraMove2 18s ease-in-out infinite;
+        }
+
+        .aurora-wave-3 {
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 60%);
+            bottom: -30%;
+            left: 20%;
+            animation: auroraMove3 20s ease-in-out infinite;
+        }
+
+        @keyframes auroraMove1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(80px, 40px) scale(1.1); }
+            66% { transform: translate(-40px, 80px) scale(0.95); }
+        }
+
+        @keyframes auroraMove2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-60px, 50px) scale(1.15); }
+            66% { transform: translate(40px, -30px) scale(0.9); }
+        }
+
+        @keyframes auroraMove3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -60px) scale(1.05); }
+            66% { transform: translate(-70px, 20px) scale(1.1); }
+        }
+
+        /* ========== FLOATING PARTICLES ========== */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: particleFloat linear infinite;
+        }
+
+        .particle:nth-child(1)  { width: 4px;  height: 4px;  left: 3%;  background: rgba(16, 185, 129, 0.4);  animation-duration: 18s; animation-delay: 0s; }
+        .particle:nth-child(2)  { width: 6px;  height: 6px;  left: 12%; background: rgba(245, 158, 11, 0.3);  animation-duration: 15s; animation-delay: 2s; }
+        .particle:nth-child(3)  { width: 3px;  height: 3px;  left: 22%; background: rgba(14, 165, 233, 0.5);  animation-duration: 20s; animation-delay: 4s; }
+        .particle:nth-child(4)  { width: 5px;  height: 5px;  left: 32%; background: rgba(16, 185, 129, 0.35); animation-duration: 14s; animation-delay: 1s; }
+        .particle:nth-child(5)  { width: 4px;  height: 4px;  left: 42%; background: rgba(245, 158, 11, 0.4);  animation-duration: 17s; animation-delay: 3s; }
+        .particle:nth-child(6)  { width: 7px;  height: 7px;  left: 52%; background: rgba(14, 165, 233, 0.25); animation-duration: 19s; animation-delay: 5s; }
+        .particle:nth-child(7)  { width: 3px;  height: 3px;  left: 62%; background: rgba(16, 185, 129, 0.45); animation-duration: 13s; animation-delay: 0.5s; }
+        .particle:nth-child(8)  { width: 5px;  height: 5px;  left: 72%; background: rgba(245, 158, 11, 0.35); animation-duration: 16s; animation-delay: 2.5s; }
+        .particle:nth-child(9)  { width: 4px;  height: 4px;  left: 82%; background: rgba(14, 165, 233, 0.4);  animation-duration: 21s; animation-delay: 1.5s; }
+        .particle:nth-child(10) { width: 6px;  height: 6px;  left: 92%; background: rgba(16, 185, 129, 0.3);  animation-duration: 12s; animation-delay: 4.5s; }
+        .particle:nth-child(11) { width: 3px;  height: 3px;  left: 8%;  background: rgba(168, 85, 247, 0.3);  animation-duration: 22s; animation-delay: 3.5s; }
+        .particle:nth-child(12) { width: 5px;  height: 5px;  left: 48%; background: rgba(168, 85, 247, 0.25); animation-duration: 16s; animation-delay: 6s; }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(110vh) rotate(0deg);
+                opacity: 0;
+            }
+            5% { opacity: 1; }
+            95% { opacity: 1; }
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ========== TWINKLING STARS ========== */
+        .stars-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .twinkle-star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: starTwinkle ease-in-out infinite;
+        }
+
+        .twinkle-star:nth-child(1)  { width: 2px; height: 2px; top: 6%;  left: 15%; animation-duration: 3s; }
+        .twinkle-star:nth-child(2)  { width: 2px; height: 2px; top: 12%; left: 38%; animation-duration: 4s; animation-delay: 0.5s; }
+        .twinkle-star:nth-child(3)  { width: 3px; height: 3px; top: 8%;  left: 62%; animation-duration: 2.5s; animation-delay: 1s; }
+        .twinkle-star:nth-child(4)  { width: 2px; height: 2px; top: 18%; left: 80%; animation-duration: 3.5s; animation-delay: 0.3s; }
+        .twinkle-star:nth-child(5)  { width: 2px; height: 2px; top: 30%; left: 8%;  animation-duration: 4.5s; animation-delay: 1.5s; }
+        .twinkle-star:nth-child(6)  { width: 3px; height: 3px; top: 42%; left: 90%; animation-duration: 2.8s; animation-delay: 0.8s; }
+        .twinkle-star:nth-child(7)  { width: 2px; height: 2px; top: 55%; left: 5%;  animation-duration: 3.2s; animation-delay: 2s; }
+        .twinkle-star:nth-child(8)  { width: 2px; height: 2px; top: 68%; left: 75%; animation-duration: 3.8s; animation-delay: 0.7s; }
+        .twinkle-star:nth-child(9)  { width: 3px; height: 3px; top: 78%; left: 22%; animation-duration: 2.2s; animation-delay: 1.2s; }
+        .twinkle-star:nth-child(10) { width: 2px; height: 2px; top: 88%; left: 55%; animation-duration: 4.2s; animation-delay: 0.4s; }
+        .twinkle-star:nth-child(11) { width: 2px; height: 2px; top: 22%; left: 50%; animation-duration: 3.6s; animation-delay: 1.8s; }
+        .twinkle-star:nth-child(12) { width: 2px; height: 2px; top: 48%; left: 35%; animation-duration: 2.9s; animation-delay: 0.6s; }
+        .twinkle-star:nth-child(13) { width: 3px; height: 3px; top: 62%; left: 65%; animation-duration: 3.4s; animation-delay: 2.2s; }
+        .twinkle-star:nth-child(14) { width: 2px; height: 2px; top: 35%; left: 95%; animation-duration: 4.8s; animation-delay: 1.1s; }
+        .twinkle-star:nth-child(15) { width: 2px; height: 2px; top: 92%; left: 85%; animation-duration: 3.1s; animation-delay: 0.9s; }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.4); }
+        }
+
+        /* ========== MAIN CONTAINER ========== */
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 680px;
+            width: 92%;
+            animation: containerSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        @keyframes containerSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== CARD ========== */
+        .card {
+            background: rgba(15, 15, 25, 0.7);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 28px;
+            padding: 65px 55px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.5), rgba(245, 158, 11, 0.5), rgba(14, 165, 233, 0.5), transparent);
+            animation: topBorderShimmer 4s ease-in-out infinite;
+        }
+
+        @keyframes topBorderShimmer {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: -150px;
+            right: -150px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.04) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* ========== ICON SECTION ========== */
+        .icon-section {
+            margin-bottom: 35px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .icon-container {
+            width: 110px;
+            height: 110px;
+            border-radius: 32px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(245, 158, 11, 0.08));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            position: relative;
+            animation: iconFloat 3s ease-in-out infinite;
+            border: 1px solid rgba(16, 185, 129, 0.15);
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(2deg); }
+        }
+
+        .icon-container svg {
+            width: 55px;
+            height: 55px;
+        }
+
+        /* Orbiting dots */
+        .orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 140px;
+            height: 140px;
+            margin-top: -70px;
+            margin-left: -70px;
+            border-radius: 50%;
+            animation: orbitSpin 6s linear infinite;
+        }
+
+        .orbit-dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .orbit-dot-1 {
+            top: 0;
+            left: 50%;
+            margin-left: -3px;
+            background: #10b981;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+        }
+
+        .orbit-dot-2 {
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            background: #f59e0b;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+        }
+
+        .orbit-dot-3 {
+            top: 50%;
+            right: 0;
+            margin-top: -3px;
+            background: #0ea5e9;
+            box-shadow: 0 0 10px rgba(14, 165, 233, 0.6);
+        }
+
+        @keyframes orbitSpin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Pulse ring */
+        .pulse-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 110px;
+            height: 110px;
+            margin-top: -55px;
+            margin-left: -55px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 32px;
+            animation: pulseExpand 2.5s ease-out infinite;
+        }
+
+        .pulse-ring-2 {
+            animation-delay: 1.25s;
+        }
+
+        @keyframes pulseExpand {
+            0% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* ========== BADGE ========== */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 18px;
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #10b981;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            animation: fadeIn 0.6s ease-out 0.2s forwards;
+            opacity: 0;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: badgePulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* ========== TITLE ========== */
+        .title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            animation: titleReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .title span {
+            background: linear-gradient(135deg, #10b981, #34d399, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @keyframes titleReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== SUBTITLE ========== */
+        .subtitle {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.35);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+            font-weight: 500;
+            animation: titleReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* ========== DIVIDER ========== */
+        .divider-line {
+            width: 60px;
+            height: 3px;
+            margin: 0 auto 32px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #10b981, #f59e0b);
+            position: relative;
+            animation: titleReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .divider-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #10b981, #f59e0b);
+            filter: blur(8px);
+            opacity: 0.5;
+        }
+
+        /* ========== MESSAGE ========== */
+        .message {
+            font-size: 1.1rem;
+            line-height: 2;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 40px;
+            animation: titleReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.65s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .message strong {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+        }
+
+        .message .accent-green {
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .message .accent-amber {
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        /* ========== STATUS INDICATORS ========== */
+        .status-row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            animation: titleReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.75s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .status-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .status-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+        }
+
+        .status-icon.green {
+            background: rgba(16, 185, 129, 0.12);
+            color: #10b981;
+        }
+
+        .status-icon.amber {
+            background: rgba(245, 158, 11, 0.12);
+            color: #f59e0b;
+        }
+
+        .status-icon.blue {
+            background: rgba(14, 165, 233, 0.12);
+            color: #0ea5e9;
+        }
+
+        .status-text {
+            text-align: left;
+        }
+
+        .status-label {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.35);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .status-value {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 600;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* ========== ANIMATED PROGRESS ========== */
+        .progress-section {
+            margin-bottom: 45px;
+            animation: titleReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.85s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .progress-label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.45);
+            font-weight: 500;
+        }
+
+        .progress-percent {
+            font-size: 0.8rem;
+            color: #10b981;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #10b981, #34d399, #f59e0b);
+            position: relative;
+            animation: progressFill 4s ease-in-out infinite;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -2px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.8);
+        }
+
+        @keyframes progressFill {
+            0% { width: 5%; }
+            50% { width: 72%; }
+            100% { width: 5%; }
+        }
+
+        /* ========== ANIMATED DOTS ========== */
+        .dots-loader {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 45px;
+            animation: titleReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.95s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .loader-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: loaderBounce 1.4s ease-in-out infinite;
+        }
+
+        .loader-dot:nth-child(1) { background: #10b981; animation-delay: 0s; }
+        .loader-dot:nth-child(2) { background: #34d399; animation-delay: 0.15s; }
+        .loader-dot:nth-child(3) { background: #f59e0b; animation-delay: 0.3s; }
+        .loader-dot:nth-child(4) { background: #0ea5e9; animation-delay: 0.45s; }
+        .loader-dot:nth-child(5) { background: #a855f7; animation-delay: 0.6s; }
+
+        @keyframes loaderBounce {
+            0%, 80%, 100% { transform: scale(0.5); opacity: 0.3; }
+            40% { transform: scale(1.3); opacity: 1; }
+        }
+
+        /* ========== BACK BUTTON ========== */
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 36px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: 'Space Grotesk', sans-serif;
+            text-decoration: none;
+            border-radius: 16px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            animation: titleReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.05s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+            letter-spacing: 0.3px;
+        }
+
+        .btn-back::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn-back:hover::before {
+            left: 100%;
+        }
+
+        .btn-back:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-back:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .btn-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover .btn-arrow {
+            transform: translateX(-4px);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-arrow svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* ========== SECONDARY LINK ========== */
+        .secondary-link {
+            display: block;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            animation: titleReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.15s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .secondary-link:hover {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ========== CORNER DECORATIONS ========== */
+        .corner-deco {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            pointer-events: none;
+            opacity: 0.1;
+        }
+
+        .corner-deco.top-left {
+            top: 20px;
+            left: 20px;
+            border-top: 2px solid #10b981;
+            border-left: 2px solid #10b981;
+            border-radius: 4px 0 0 0;
+        }
+
+        .corner-deco.top-right {
+            top: 20px;
+            right: 20px;
+            border-top: 2px solid #f59e0b;
+            border-right: 2px solid #f59e0b;
+            border-radius: 0 4px 0 0;
+        }
+
+        .corner-deco.bottom-left {
+            bottom: 20px;
+            left: 20px;
+            border-bottom: 2px solid #0ea5e9;
+            border-left: 2px solid #0ea5e9;
+            border-radius: 0 0 0 4px;
+        }
+
+        .corner-deco.bottom-right {
+            bottom: 20px;
+            right: 20px;
+            border-bottom: 2px solid #a855f7;
+            border-right: 2px solid #a855f7;
+            border-radius: 0 0 4px 0;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 640px) {
+            .card {
+                padding: 45px 28px;
+                border-radius: 22px;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .message {
+                font-size: 0.95rem;
+            }
+
+            .status-row {
+                gap: 12px;
+            }
+
+            .status-item {
+                padding: 10px 14px;
+            }
+
+            .icon-container {
+                width: 90px;
+                height: 90px;
+                border-radius: 26px;
+            }
+
+            .icon-container svg {
+                width: 44px;
+                height: 44px;
+            }
+
+            .orbit {
+                width: 115px;
+                height: 115px;
+                margin-top: -57.5px;
+                margin-left: -57.5px;
+            }
+
+            .subtitle {
+                font-size: 0.75rem;
+                letter-spacing: 2px;
+            }
+
+            .fixed-back-btn {
+                top: 16px;
+                left: 16px;
+                padding: 10px 18px;
+                font-size: 0.8rem;
+                border-radius: 12px;
+            }
+
+            .fixed-back-btn .kbd-hint {
+                display: none;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .card {
+                padding: 35px 20px;
+            }
+
+            .title {
+                font-size: 1.7rem;
+            }
+
+            .status-row {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .fixed-back-btn {
+                top: 12px;
+                left: 12px;
+                padding: 8px 14px;
+                font-size: 0.75rem;
+                gap: 6px;
+            }
+
+            .fixed-back-btn svg {
+                width: 14px;
+                height: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== FIXED TOP-LEFT BACK BUTTON ===== -->
+    <a href="dashboard.html" class="fixed-back-btn" id="fixedBackBtn" title="Back to Dashboard (Esc)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5"/>
+            <path d="M12 19l-7-7 7-7"/>
+        </svg>
+        Dashboard
+        <span class="kbd-hint">ESC</span>
+    </a>
+
+    <!-- ===== BACKGROUND LAYERS ===== -->
+    <div class="bg-mesh"></div>
+    <div class="grid-pattern"></div>
+
+    <div class="aurora">
+        <div class="aurora-wave aurora-wave-1"></div>
+        <div class="aurora-wave aurora-wave-2"></div>
+        <div class="aurora-wave aurora-wave-3"></div>
+    </div>
+
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="stars-container">
+        <div class="twinkle-star"></div>
+        <div class="twinkle-star"></div>
+        <div class="twinkle-star"></div>
+        <div class="twinkle-star"></div>
+        <div class="twinkle-star"></div>
+        <div class="twinkle-star"></div>
+        <div class="twinkle-star"></div>
+        <div class="twinkle-star"></div>
+        <div class="twinkle-star"></div>
+        <div class="twinkle-star"></div>
+        <div class="twinkle-star"></div>
+        <div class="twinkle-star"></div>
+        <div class="twinkle-star"></div>
+        <div class="twinkle-star"></div>
+        <div class="twinkle-star"></div>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="container">
+        <div class="card">
+
+            <!-- Corner Decorations -->
+            <div class="corner-deco top-left"></div>
+            <div class="corner-deco top-right"></div>
+            <div class="corner-deco bottom-left"></div>
+            <div class="corner-deco bottom-right"></div>
+
+            <!-- Icon Section -->
+            <div class="icon-section">
+                <div class="pulse-ring"></div>
+                <div class="pulse-ring pulse-ring-2"></div>
+                <div class="orbit">
+                    <div class="orbit-dot orbit-dot-1"></div>
+                    <div class="orbit-dot orbit-dot-2"></div>
+                    <div class="orbit-dot orbit-dot-3"></div>
+                </div>
+                <div class="icon-container">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L13.09 8.26L18 6L14.74 10.91L21 12L14.74 13.09L18 18L13.09 15.74L12 22L10.91 15.74L6 18L9.26 13.09L3 12L9.26 10.91L6 6L10.91 8.26L12 2Z" fill="url(#iconGrad)" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
+                        <defs>
+                            <linearGradient id="iconGrad" x1="3" y1="2" x2="21" y2="22">
+                                <stop offset="0%" stop-color="#10b981"/>
+                                <stop offset="50%" stop-color="#34d399"/>
+                                <stop offset="100%" stop-color="#f59e0b"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Badge -->
+            <div class="badge">
+                <div class="badge-dot"></div>
+                In Development
+            </div>
+
+            <!-- Title -->
+            <h1 class="title">
+                <span>Coming Soon</span>
+            </h1>
+
+            <!-- Subtitle -->
+            <p class="subtitle">Feature Under Construction</p>
+
+            <!-- Divider -->
+            <div class="divider-line"></div>
+
+            <!-- Message -->
+            <p class="message">
+                This feature is <strong>not available</strong> till now.<br>
+                We will be bringing this feature <span class="accent-green">soon</span>.<br>
+                Our team is working hard to deliver something <span class="accent-amber">amazing</span>.
+            </p>
+
+            <!-- Status Indicators -->
+            <div class="status-row">
+                <div class="status-item">
+                    <div class="status-icon green">⚡</div>
+                    <div class="status-text">
+                        <div class="status-label">Status</div>
+                        <div class="status-value">Building</div>
+                    </div>
+                </div>
+                <div class="status-item">
+                    <div class="status-icon amber">🛡️</div>
+                    <div class="status-text">
+                        <div class="status-label">Quality</div>
+                        <div class="status-value">Testing</div>
+                    </div>
+                </div>
+                <div class="status-item">
+                    <div class="status-icon blue">🚀</div>
+                    <div class="status-text">
+                        <div class="status-label">Launch</div>
+                        <div class="status-value">Soon</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-section">
+                <div class="progress-header">
+                    <span class="progress-label">Development Progress</span>
+                    <span class="progress-percent">In Progress...</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+
+            <!-- Loading Dots -->
+            <div class="dots-loader">
+                <div class="loader-dot"></div>
+                <div class="loader-dot"></div>
+                <div class="loader-dot"></div>
+                <div class="loader-dot"></div>
+                <div class="loader-dot"></div>
+            </div>
+
+            <!-- Back Button -->
+            <a href="dashboard.html" class="btn-back">
+                <span class="btn-arrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5"/>
+                        <path d="M12 19l-7-7 7-7"/>
+                    </svg>
+                </span>
+                Back to Dashboard
+            </a>
+
+            <!-- Secondary Link -->
+            <a href="dashboard.html" class="secondary-link">
+                or press Esc to return
+            </a>
+
+        </div>
+    </div>
+
+    <!-- ===== KEYBOARD SHORTCUT & NAVIGATION ===== -->
+    <script>
+        // Escape key to go back to dashboard
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                navigateToDashboard();
+            }
+        });
+
+        // Smooth navigation with fade-out transition
+        function navigateToDashboard() {
+            document.body.style.transition = 'opacity 0.4s ease';
+            document.body.style.opacity = '0';
+            setTimeout(function() {
+                window.location.href = 'dashboard.html';
+            }, 400);
+        }
+
+        // Apply fade-out to all dashboard links
+        document.querySelectorAll('a[href="dashboard.html"]').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                navigateToDashboard();
+            });
+        });
+
+        // Browser back button support
+        window.addEventListener('popstate', function() {
+            navigateToDashboard();
+        });
+
+        // Add smooth counter animation to progress percent
+        const progressPercent = document.querySelector('.progress-percent');
+
+        function animateCounter() {
+            let current = 0;
+            let direction = 1;
+
+            setInterval(() => {
+                if (direction === 1) {
+                    current += Math.random() * 3;
+                    if (current >= 72) {
+                        direction = -1;
+                    }
+                } else {
+                    current -= Math.random() * 3;
+                    if (current <= 5) {
+                        direction = 1;
+                    }
+                }
+                progressPercent.textContent = Math.floor(current) + '%';
+            }, 80);
+        }
+
+        // Start counter after the animation delay
+        setTimeout(animateCounter, 1500);
+    </script>
+
+</body>
+</html>
